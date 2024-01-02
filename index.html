@@ -2,12 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/vite.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
     <title>Hangman</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
+    <div id="app">
+      <section class="gallows">
+        <div class="image-container">
+          <img
+            class="image-container__gallows"
+            src="/img/gallows.svg"
+            alt="gallows" />
+          <img
+            class="image-container__head"
+            src="/img/head.svg"
+            alt="head" />
+          <img
+            class="image-container__body"
+            src="/img/body.svg"
+            alt="body" />
+          <img
+            class="image-container__hand-one"
+            src="/img/hand-one.svg"
+            alt="hand one" />
+          <img
+            class="image-container__hand-two"
+            src="/img/hand-two.svg"
+            alt="hand two" />
+          <img
+          class="image-container__leg-one"
+          src="/img/leg-one.svg"
+          alt="leg one">
+          <img
+          class="image-container__leg-two"
+          src="/img/leg-two.svg"
+          alt="leg two">
+        </div>
+        <h1 class="gallows__title">HANGMAN GAME</h1>
+      </section>
+      <section class="quiz">Hint</section>
+    </div>
+    <script
+      type="module"
+      src="/main.js"></script>
   </body>
 </html>

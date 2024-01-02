@@ -28,10 +28,70 @@ h1 {
 #app {
   display: flex;
   width: 100%;
-  max-width: 700px;
+  max-width: 764px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+}
+
+.gallows {
+  max-width: 50%;
+  width: 353px;
+}
+
+.image-container {
+  width: 100%;
+  position: relative;
+}
+
+.image-container__gallows {
+  width: 100%;
+}
+
+.image-container__head {
+  position: absolute;
+  top: 20%;
+  left: 73%;
+  width: 25%;
+}
+
+.image-container__body {
+  position: absolute;
+  top: 35%;
+  left: 85%;
+  height: 25%;
+}
+
+.image-container__hand-one {
+  position: absolute;
+  top: 40%;
+  left: 65.5%;
+  height: 15%;
+}
+
+.image-container__hand-two {
+  position: absolute;
+  top: 40%;
+  left: 85%;
+  height: 15%;
+}
+
+.image-container__leg-one {
+  position: absolute;
+  top: 59%;
+  left: 65.5%;
+  height: 15%;
+}
+
+.image-container__leg-two {
+  position: absolute;
+  top: 59%;
+  left: 85%;
+  height: 15%;
+}
+
+.gallows__title {
+  margin-top: 2rem;
+  padding-left: 2rem;
 }
 
 button {
