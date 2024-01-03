@@ -20,17 +20,21 @@ export function createQuizSection() {
   return section;
 }
 
-export function creteWord(word) {
+export function createWord(word) {
   const parent = document.querySelector('.quiz__word');
+  parent.innerHTML = '';
   createLetter(word, parent, 'quiz__word_letter', 'div');
 }
 
 export function creteHintContent(text) {
   const parent = document.querySelector('.quiz__hint');
+  parent.innerHTML = '';
   const p = createElement('p', 'quiz__hint_text');
   p.innerText = text;
-  const counter = createElement('p', 'quiz__hint_counter');
-  counter.innerText = 'Incorrect gueses 0/6';
+  const infoCounter = createElement('p', 'quiz__hint_counter');
+  infoCounter.innerText = 'Incorrect gueses ';
+  const counter = createElement('b', 'quiz__hint_counter-value');
+  infoCounter.append(counter);
   parent.append(p);
-  parent.append(counter);
+  parent.append(infoCounter);
 }
