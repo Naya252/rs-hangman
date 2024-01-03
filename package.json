@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "eslint": "eslint --fix ./**/*.js",
-    "prettier": "prettier --write ./**/*.{js,css,scss}",
+    "prettier": "prettier --write ./**/*.{js,css,scss,html}",
     "lint": "npm run prettier && eslint"
   },
   "devDependencies": {
