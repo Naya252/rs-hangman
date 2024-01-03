@@ -1,10 +1,11 @@
+@import './variables.module.scss';
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: $light-color;
+  background-color: $dark-color;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,9 +24,9 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  max-width: $content-width-xl;
   margin: 0 auto;
-  padding: 2rem;
+  padding: $content-gap-xl;
 }
 
 .gallows {
@@ -39,6 +40,7 @@
   font-size: 1.5rem;
   line-height: 1.1;
   margin: 0;
+  color: $light-color-secondary;
 }
 
 .gallows__image-container {
@@ -114,7 +116,7 @@
 }
 
 .quiz__word_letter.hide {
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid $light-color-secondary;
 }
 
 .quiz__hint {
@@ -139,12 +141,13 @@
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: $dark-color-secondary;
+  color: $light-color;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 .quiz__keyboard_key:hover {
-  border-color: #646cff;
+  border-color: $accent-color;
 }
 .quiz__keyboard_key:focus,
 .quiz__keyboard_key:focus-visible {

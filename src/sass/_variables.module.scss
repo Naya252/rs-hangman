@@ -1,0 +1,24 @@
+//Main colors
+$dark-color: #242424;
+$dark-color-secondary: #1a1a1a;
+$light-color: #c4bebe;
+$light-color-secondary: #fff;
+$accent-color: #646cff;
+
+//Content width
+$content-max-width: 1440px;
+$content-gap-xl: 40px;
+$content-gap-xs: 16px;
+$content-width-xl: $content-max-width - $content-gap-xl * 2;
+$content-width-xs: $content-max-width - $content-gap-xs * 2;
+
+$main-p-xl: 100px;
+$main-p-md: 60px;
+$main-p-xs: 16px;
+
+$breakpoint-xl: 1440px;
+$breakpoint-lg: 1044px;
+$breakpoint-md: 768px;
+$breakpoint-sm: 720px;
+$breakpoint-xs: 600px;
+$breakpoint-xxs: 379px;
