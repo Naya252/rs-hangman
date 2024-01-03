@@ -1,5 +1,6 @@
 import { QUIZ_DATA, ALPHABET } from '../shared/constants';
 import { creteHintContent, createWord } from '../ui/layouts/quiz-section';
+import { createFigurePart, cleanGallows } from '../ui/layouts/gallows-section';
 
 class Quiz {
   constructor(id, word, hint, counter = 0) {
@@ -16,6 +17,8 @@ class Quiz {
     this.changeWord();
     this.changeHint();
     this.cleanCounter();
+    const overlay = document.querySelector('.quiz__keyboard_overlay');
+    overlay.classList.remove('show');
   }
 
   changeWord() {
@@ -32,9 +35,20 @@ class Quiz {
   changeCounter() {
     this.counter += 1;
     this.printCounter();
+    createFigurePart(this.counter, document.querySelector('.gallows__image-container'));
+
     if (this.counter === 6) {
-      this.cleanQuiz();
+      this.showModal();
     }
+  }
+
+  showModal() {
+    const overlay = document.querySelector('.quiz__keyboard_overlay');
+    overlay.classList.add('show');
+    setTimeout(() => {
+      this.cleanQuiz();
+      cleanGallows();
+    }, 1000);
   }
 
   printCounter() {

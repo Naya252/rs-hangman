@@ -189,6 +189,21 @@
   max-width: 520px;
   min-height: 136px;
   margin: 0 auto;
+  position: relative;
+
+  .quiz__keyboard_overlay {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+  }
 }
 
 .quiz__keyboard_key {

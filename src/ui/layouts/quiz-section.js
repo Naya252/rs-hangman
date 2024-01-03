@@ -4,6 +4,8 @@ import { createElement, createLetter } from '../../shared/helpers';
 function createKeyboard() {
   const keyboard = createElement('div', 'quiz__keyboard');
   createLetter(ALPHABET, keyboard, 'quiz__keyboard_key', 'button');
+  const overlay = createElement('div', 'quiz__keyboard_overlay');
+  keyboard.append(overlay);
   return keyboard;
 }
 

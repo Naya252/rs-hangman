@@ -1,5 +1,5 @@
 import './src/sass/style.module.scss';
-import createGallowsSection from './src/ui/layouts/gallows-section';
+import { createGallowsSection } from './src/ui/layouts/gallows-section';
 import { createQuizSection } from './src/ui/layouts/quiz-section';
 import { changeTitle } from './src/shared/helpers';
 import { quiz, chooseKey } from './src/services/quiz-service';
