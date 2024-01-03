@@ -22,7 +22,7 @@ export function createQuizSection() {
 
 export function creteWord(word) {
   const parent = document.querySelector('.quiz__word');
-  createLetter(word, parent, 'quiz__word_letter hide', 'div');
+  createLetter(word, parent, 'quiz__word_letter', 'div');
 }
 
 export function creteHintContent(text) {

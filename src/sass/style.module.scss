@@ -145,6 +145,7 @@
 }
 
 .quiz__word {
+  min-height: 52px;
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -171,12 +172,9 @@
   }
 }
 
-.quiz__word_letter.hide {
-  color: transparent;
-}
-
 .quiz__hint {
   text-align: center;
+  min-height: 100px;
 }
 
 .quiz__keyboard {
@@ -186,6 +184,7 @@
   justify-content: center;
   gap: 8px;
   max-width: 520px;
+  min-height: 136px;
   margin: 0 auto;
 }
 
