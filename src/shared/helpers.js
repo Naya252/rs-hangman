@@ -9,8 +9,10 @@ export function createElement(el, className) {
 export function createLetter(arr, parent, className, selector) {
   arr.forEach((el) => {
     const letter = createElement(selector, className);
-    if (className !== 'quiz__word_letter') {
+    if (className === 'quiz__keyboard_key') {
       letter.innerText = el;
+      letter.value = el;
+      letter.type = 'button';
     }
     parent.append(letter);
   });
