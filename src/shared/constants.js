@@ -28,3 +28,76 @@ export const ALPHABET = [
   'Y',
   'Z',
 ];
+
+export const QUIZ_DATA = [
+  {
+    id: 1,
+    wordEn: 'children',
+    hintEn: 'Who could be mailed to the US before 1913?',
+    wordRu: 'детей',
+    hintRu: 'Кого можно было отправить по почте в США до 1913 года?',
+  },
+  {
+    id: 2,
+    wordEn: 'chinese',
+    hintEn: 'This language is the most popular in the world',
+    wordRu: 'китайский',
+    hintRu: 'Этот язык самый популярный в мире',
+  },
+  {
+    id: 3,
+    wordEn: 'antarctica',
+    hintEn: 'Where the Onyx River flows 60 days a year?',
+    wordRu: 'антарктида',
+    hintRu: 'Где течет река Оникс 60 дней в году?',
+  },
+  {
+    id: 4,
+    wordEn: 'jellyfish',
+    hintEn: 'This animal has no brain and no blood vessels',
+    wordRu: 'медуза',
+    hintRu: 'У этого животного нет мозга и кровеносных сосудов',
+  },
+  {
+    id: 5,
+    wordEn: 'cognac',
+    hintEn: 'Thermometers were filled with this liquid until the 17th century',
+    wordRu: 'коньяк',
+    hintRu: 'Этой жидкостью заполняли термометры до 17 века',
+  },
+  {
+    id: 6,
+    wordEn: 'lemon',
+    hintEn: 'This citrus fruit contains more sugar than strawberries',
+    wordRu: 'лимон',
+    hintRu: 'Этот цитрусовый фрукт содержит больше сахара, чем клубника',
+  },
+  {
+    id: 7,
+    wordEn: 'chicken',
+    hintEn: 'The longest flight of this bird lasted 13 seconds',
+    wordRu: 'курица',
+    hintRu: 'Самый продолжительный полет этой птицы длился 13 секунд',
+  },
+  {
+    id: 8,
+    wordEn: 'jupiter',
+    hintEn: 'It regularly rains diamonds on this planet',
+    wordRu: 'юпитер',
+    hintRu: 'На этой планете регулярно идут дожди из алмазов',
+  },
+  {
+    id: 9,
+    wordEn: 'diamond',
+    hintEn: 'This gem can burn',
+    wordRu: 'алмаз',
+    hintRu: 'Этот драгоценный камень может гореть',
+  },
+  {
+    id: 10,
+    wordEn: 'duck',
+    hintEn: 'This bird is capable of diving to a depth of 6 meters',
+    wordRu: 'утка',
+    hintRu: 'Эта птица способна нырять на глубину до 6 метров',
+  },
+];
