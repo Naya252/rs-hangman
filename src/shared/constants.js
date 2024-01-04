@@ -1,5 +1,34 @@
 export const TITLE = 'HANGMAN GAME';
+
 export const { BASE_URL } = import.meta.env;
+
+export const GALLOWS_SECTION_CLASS = 'gallows';
+export const GALLOWS_TITLE_CLASS = `${GALLOWS_SECTION_CLASS}__title`;
+export const IMAGE_CONTAINER_CLASS = `${GALLOWS_SECTION_CLASS}__image-container`;
+
+const parts = ['gallows', 'head', 'body', 'hand-one', 'hand-two', 'leg-one', 'leg-two'];
+export const IMAGES_FIGURE_PARTS = parts.map((el, i) => ({
+  id: i + 1,
+  name: el,
+  class: `${IMAGE_CONTAINER_CLASS}_${el}`,
+  src: `${BASE_URL}src/img/${el}.svg`,
+}));
+
+export const QUIZ_SECTION_CLASS = 'quiz';
+export const QUIZ_TITLE_CLASS = `${QUIZ_SECTION_CLASS}__title`;
+
+export const QUIZ_WORD_CLASS = `${QUIZ_SECTION_CLASS}__word`;
+export const QUIZ_LETTER_CLASS = `${QUIZ_WORD_CLASS}_letter`;
+
+export const QUIZ_HINT_CLASS = `${QUIZ_SECTION_CLASS}__hint`;
+export const QUIZ_HINT_TEXT_CLASS = `${QUIZ_HINT_CLASS}_text`;
+export const QUIZ_HINT_INFO_CLASS = `${QUIZ_HINT_CLASS}_counter`;
+export const QUIZ_HINT_COUNTER_CLASS = `${QUIZ_HINT_CLASS}_counter-value`;
+
+export const QUIZ_KEYBOARD_CLASS = `${QUIZ_SECTION_CLASS}__keyboard`;
+export const QUIZ_KEYBOARD_KEY_CLASS = `${QUIZ_KEYBOARD_CLASS}_key`;
+export const QUIZ_KEYBOARD_OVERLAY_CLASS = `${QUIZ_KEYBOARD_CLASS}_overlay`;
+
 export const ALPHABET = [
   'A',
   'B',

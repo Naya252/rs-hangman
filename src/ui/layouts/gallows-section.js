@@ -1,17 +1,8 @@
-import { BASE_URL } from '../../shared/constants';
+import { IMAGES_FIGURE_PARTS, GALLOWS_SECTION_CLASS, IMAGE_CONTAINER_CLASS } from '../../shared/constants';
 import { createElement, removeAllChildren } from '../../shared/helpers';
 
-const imgContainerClass = 'gallows__image-container';
-const parts = ['gallows', 'head', 'body', 'hand-one', 'hand-two', 'leg-one', 'leg-two'];
-const figure = parts.map((el, i) => ({
-  id: i + 1,
-  name: el,
-  class: `${imgContainerClass}_${el}`,
-  src: `${BASE_URL}src/img/${el}.svg`,
-}));
-
 export function createFigurePart(index, parent) {
-  const el = figure[index];
+  const el = IMAGES_FIGURE_PARTS[index];
   const part = createElement('img', el.class);
   part.src = el.src;
   part.alt = el.name;
@@ -20,19 +11,19 @@ export function createFigurePart(index, parent) {
 }
 
 export function cleanGallows() {
-  const parent = removeAllChildren('.gallows__image-container');
+  const parent = removeAllChildren(`.${IMAGE_CONTAINER_CLASS}`);
   createFigurePart(0, parent);
 }
 
 function createFigure() {
-  const imgContainer = createElement('div', imgContainerClass);
+  const imgContainer = createElement('div', IMAGE_CONTAINER_CLASS);
   createFigurePart(0, imgContainer);
 
   return imgContainer;
 }
 
 export function createGallowsSection() {
-  const section = createElement('section', 'gallows');
+  const section = createElement('section', GALLOWS_SECTION_CLASS);
 
   const imgContainer = createFigure();
   section.append(imgContainer);

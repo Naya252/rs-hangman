@@ -1,4 +1,11 @@
-import { TITLE } from './constants';
+import {
+  TITLE,
+  GALLOWS_SECTION_CLASS,
+  GALLOWS_TITLE_CLASS,
+  QUIZ_SECTION_CLASS,
+  QUIZ_TITLE_CLASS,
+  QUIZ_KEYBOARD_KEY_CLASS,
+} from './constants';
 
 export function createElement(el, className) {
   const element = document.createElement(el);
@@ -9,7 +16,7 @@ export function createElement(el, className) {
 export function createLetter(arr, parent, className, selector) {
   arr.forEach((el) => {
     const letter = createElement(selector, className);
-    if (className === 'quiz__keyboard_key') {
+    if (className === QUIZ_KEYBOARD_KEY_CLASS) {
       letter.innerText = el;
       letter.value = el;
       letter.type = 'button';
@@ -31,12 +38,12 @@ function createTitle(className) {
 
 export function changeTitle(curSize, lastSize) {
   if ((curSize >= 780 && !lastSize) || (curSize >= 780 && lastSize < 780)) {
-    const title = createTitle('quiz__title');
-    document.querySelector('.quiz').prepend(title);
+    const title = createTitle(QUIZ_TITLE_CLASS);
+    document.querySelector(`.${QUIZ_SECTION_CLASS}`).prepend(title);
   }
   if ((curSize < 780 && !lastSize) || (curSize < 780 && lastSize >= 780)) {
-    const title = createTitle('gallows__title');
-    document.querySelector('.gallows').append(title);
+    const title = createTitle(GALLOWS_TITLE_CLASS);
+    document.querySelector(`.${GALLOWS_SECTION_CLASS}`).append(title);
   }
 }
 

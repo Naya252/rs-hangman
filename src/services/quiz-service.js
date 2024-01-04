@@ -1,4 +1,11 @@
-import { QUIZ_DATA, ALPHABET } from '../shared/constants';
+import {
+  QUIZ_DATA,
+  ALPHABET,
+  IMAGE_CONTAINER_CLASS,
+  QUIZ_WORD_CLASS,
+  QUIZ_HINT_COUNTER_CLASS,
+  QUIZ_KEYBOARD_KEY_CLASS,
+} from '../shared/constants';
 import { creteHintContent, createWord, cleanKeyboard, toggleKeyboardOverly } from '../ui/layouts/quiz-section';
 import { createFigurePart, cleanGallows } from '../ui/layouts/gallows-section';
 
@@ -47,7 +54,7 @@ class Quiz {
   changeCounter() {
     this.counter += 1;
     this.printCounter();
-    createFigurePart(this.counter, document.querySelector('.gallows__image-container'));
+    createFigurePart(this.counter, document.querySelector(`.${IMAGE_CONTAINER_CLASS}`));
 
     if (this.counter === 6) {
       this.showModal();
@@ -65,7 +72,7 @@ class Quiz {
   }
 
   printCounter() {
-    const parent = document.querySelector('.quiz__hint_counter-value');
+    const parent = document.querySelector(`.${QUIZ_HINT_COUNTER_CLASS}`);
     parent.innerText = `${this.counter} / ${this.max}`;
   }
 
@@ -85,7 +92,7 @@ class Quiz {
 export const quiz = new Quiz();
 
 function showLetters(letters) {
-  const word = document.querySelector('.quiz__word');
+  const word = document.querySelector(`.${QUIZ_WORD_CLASS}`);
   letters.forEach((el) => {
     word.childNodes[el.idx].innerText = el.value;
   });
@@ -123,7 +130,7 @@ function chooseKey(event) {
   if (quiz.counter < 6) {
     let key = null;
     if (event.type === 'click') {
-      key = event.target.closest('.quiz__keyboard_key');
+      key = event.target.closest(`.${QUIZ_KEYBOARD_KEY_CLASS}`);
       if (key) {
         changeKey(key);
       }
@@ -131,7 +138,7 @@ function chooseKey(event) {
     if (event.type === 'keydown') {
       const value = event.code.slice(3);
       if (ALPHABET.includes(value)) {
-        key = document.querySelector(`.quiz__keyboard_key[value=${value}]`);
+        key = document.querySelector(`.${QUIZ_KEYBOARD_KEY_CLASS}[value=${value}]`);
         changeKey(key);
       }
     }

@@ -3,6 +3,7 @@ import { createGallowsSection } from './src/ui/layouts/gallows-section';
 import { createQuizSection } from './src/ui/layouts/quiz-section';
 import { changeTitle } from './src/shared/helpers';
 import { quiz, checkTimer } from './src/services/quiz-service';
+import { QUIZ_KEYBOARD_CLASS } from './src/shared/constants';
 
 const app = document.createElement('div');
 app.className = 'container';
@@ -22,7 +23,7 @@ window.addEventListener('resize', (event) => {
   size = event.target.innerWidth;
 });
 
-const keyboard = document.querySelector('.quiz__keyboard');
+const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
 keyboard.addEventListener('click', (event) => checkTimer(event));
 window.addEventListener('keydown', (event) => checkTimer(event));
 
