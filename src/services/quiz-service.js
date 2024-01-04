@@ -1,5 +1,5 @@
 import { QUIZ_DATA, ALPHABET } from '../shared/constants';
-import { creteHintContent, createWord } from '../ui/layouts/quiz-section';
+import { creteHintContent, createWord, cleanKeyboard, toggleKeyboardOverly } from '../ui/layouts/quiz-section';
 import { createFigurePart, cleanGallows } from '../ui/layouts/gallows-section';
 
 class Quiz {
@@ -17,8 +17,6 @@ class Quiz {
     this.changeWord();
     this.changeHint();
     this.cleanCounter();
-    const overlay = document.querySelector('.quiz__keyboard_overlay');
-    overlay.classList.remove('show');
   }
 
   changeWord() {
@@ -43,11 +41,12 @@ class Quiz {
   }
 
   showModal() {
-    const overlay = document.querySelector('.quiz__keyboard_overlay');
-    overlay.classList.add('show');
+    toggleKeyboardOverly();
     setTimeout(() => {
       this.cleanQuiz();
       cleanGallows();
+      cleanKeyboard();
+      toggleKeyboardOverly();
     }, 1000);
   }
 

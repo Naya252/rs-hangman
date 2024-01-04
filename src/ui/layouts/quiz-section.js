@@ -38,3 +38,17 @@ export function creteHintContent(text) {
   parent.append(p);
   parent.append(infoCounter);
 }
+
+export function cleanKeyboard() {
+  const keyboard = document.querySelector('.quiz__keyboard');
+  let count = keyboard.childNodes.length;
+  while (count > 0) {
+    count -= 1;
+    keyboard.childNodes[count].removeAttribute('disabled');
+  }
+}
+
+export function toggleKeyboardOverly() {
+  const overlay = document.querySelector('.quiz__keyboard_overlay');
+  overlay.classList.toggle('show');
+}
