@@ -37,11 +37,11 @@ function createTitle(className) {
 }
 
 export function changeTitle(curSize, lastSize) {
-  if ((curSize >= 780 && !lastSize) || (curSize >= 780 && lastSize < 780)) {
+  if ((curSize >= 781 && !lastSize) || (curSize >= 781 && lastSize <= 780)) {
     const title = createTitle(QUIZ_TITLE_CLASS);
     document.querySelector(`.${QUIZ_SECTION_CLASS}`).prepend(title);
   }
-  if ((curSize < 780 && !lastSize) || (curSize < 780 && lastSize >= 780)) {
+  if ((curSize < 781 && !lastSize) || (curSize < 781 && lastSize >= 781)) {
     const title = createTitle(GALLOWS_TITLE_CLASS);
     document.querySelector(`.${GALLOWS_SECTION_CLASS}`).append(title);
   }

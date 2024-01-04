@@ -47,6 +47,12 @@
   width: 353px;
 }
 
+@media only screen and (max-width: $breakpoint-lg) {
+  .gallows {
+    max-width: 30%;
+  }
+}
+
 @media only screen and (max-width: $breakpoint-md) {
   .gallows {
     max-width: 520px;
@@ -129,9 +135,9 @@
   }
 }
 
-@media only screen and (max-width: $breakpoint-md) {
+@media only screen and (max-width: $breakpoint-sm) {
   .quiz {
-    padding-left: $quiz-pl-md;
+    gap: 2rem;
   }
 }
 
@@ -168,6 +174,14 @@
     position: absolute;
     left: 0;
     bottom: -8px;
+  }
+}
+
+@media only screen and (max-width: $breakpoint-lg) {
+  .quiz__word_letter {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 
@@ -211,7 +225,7 @@
   border: 2px solid transparent;
   width: 3rem;
   height: 2.5rem;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
   background-color: $dark-color-secondary;
@@ -239,7 +253,7 @@
   cursor: auto;
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
