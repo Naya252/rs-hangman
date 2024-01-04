@@ -9,6 +9,7 @@ class Quiz {
     this.hint = hint;
     this.counter = counter;
     this.max = 6;
+    this.timeStartClickBtn = null;
   }
 
   changeId() {

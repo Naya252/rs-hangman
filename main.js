@@ -24,7 +24,20 @@ window.addEventListener('resize', (event) => {
 
 const keyboard = document.querySelector('.quiz__keyboard');
 keyboard.addEventListener('click', (event) => chooseKey(event));
-window.addEventListener('keydown', (event) => chooseKey(event));
+window.addEventListener('keydown', (event) => {
+  if (quiz.counter < 6) {
+    if (!quiz.timeStartClickBtn) {
+      quiz.timeStartClickBtn = window.performance.now();
+      chooseKey(event);
+    } else {
+      const timeSecondClick = window.performance.now();
+      if (timeSecondClick - quiz.timeStartClickBtn > 310) {
+        quiz.timeStartClickBtn = timeSecondClick;
+        chooseKey(event);
+      }
+    }
+  }
+});
 
 setTimeout(() => {
   quiz.changeId();
