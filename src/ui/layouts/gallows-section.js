@@ -1,5 +1,5 @@
 import { BASE_URL } from '../../shared/constants';
-import { createElement } from '../../shared/helpers';
+import { createElement, removeAllChildren } from '../../shared/helpers';
 
 const imgContainerClass = 'gallows__image-container';
 const parts = ['gallows', 'head', 'body', 'hand-one', 'hand-two', 'leg-one', 'leg-two'];
@@ -20,8 +20,7 @@ export function createFigurePart(index, parent) {
 }
 
 export function cleanGallows() {
-  const parent = document.querySelector('.gallows__image-container');
-  parent.innerHTML = '';
+  const parent = removeAllChildren('.gallows__image-container');
   createFigurePart(0, parent);
 }
 

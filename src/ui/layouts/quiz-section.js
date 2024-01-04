@@ -1,5 +1,5 @@
 import { ALPHABET } from '../../shared/constants';
-import { createElement, createLetter } from '../../shared/helpers';
+import { createElement, createLetter, removeAllChildren } from '../../shared/helpers';
 
 function createKeyboard() {
   const keyboard = createElement('div', 'quiz__keyboard');
@@ -23,14 +23,12 @@ export function createQuizSection() {
 }
 
 export function createWord(word) {
-  const parent = document.querySelector('.quiz__word');
-  parent.innerHTML = '';
+  const parent = removeAllChildren('.quiz__word');
   createLetter(word, parent, 'quiz__word_letter', 'div');
 }
 
 export function creteHintContent(text) {
-  const parent = document.querySelector('.quiz__hint');
-  parent.innerHTML = '';
+  const parent = removeAllChildren('.quiz__hint');
   const p = createElement('p', 'quiz__hint_text');
   p.innerText = text;
   const infoCounter = createElement('p', 'quiz__hint_counter');

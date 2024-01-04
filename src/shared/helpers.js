@@ -39,3 +39,9 @@ export function changeTitle(curSize, lastSize) {
     document.querySelector('.gallows').append(title);
   }
 }
+
+export function removeAllChildren(parentSelector) {
+  const parent = document.querySelector(`${parentSelector}`);
+  parent.innerHTML = '';
+  return parent;
+}
