@@ -102,14 +102,16 @@ export function chooseKey(event) {
     key = event.target.closest('.quiz__keyboard_key');
     if (key) {
       const value = key.getAttributeNode('value');
-      checkKey(key, value.value);
+      key.focus();
+      setTimeout(() => {
+        checkKey(key, value.value);
+      }, 300);
     }
   }
   if (event.type === 'keydown') {
     const value = event.code.slice(3);
     if (ALPHABET.includes(value)) {
       key = document.querySelector(`.quiz__keyboard_key[value=${value}]`);
-      key.focus();
       key.click();
     }
   }
