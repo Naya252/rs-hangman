@@ -1,4 +1,5 @@
 @import './variables.module.scss';
+@import './modal.module.scss';
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -220,10 +221,8 @@
   }
 }
 
-.quiz__keyboard_key {
+.btn {
   border-radius: 8px;
-  border: 2px solid transparent;
-  width: 3rem;
   height: 2.5rem;
   font-size: 1rem;
   font-weight: 500;
@@ -232,6 +231,10 @@
   color: $light-color;
   cursor: pointer;
   transition: all 0.3s;
+}
+
+.quiz__keyboard_key {
+  width: 3rem;
   position: relative;
 }
 .quiz__keyboard_key:not([disabled]):hover {
