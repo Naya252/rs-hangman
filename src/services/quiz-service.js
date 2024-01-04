@@ -109,23 +109,46 @@ function checkKey(key, value) {
   key.setAttribute('disabled', '');
 }
 
-export function chooseKey(event) {
-  let key = null;
-  if (event.type === 'click') {
-    key = event.target.closest('.quiz__keyboard_key');
-    if (key) {
-      const value = key.getAttributeNode('value');
-      key.focus();
-      setTimeout(() => {
-        checkKey(key, value.value);
-      }, 300);
+function changeKey(key) {
+  if (!key.hasAttribute('disabled')) {
+    const value = key.getAttributeNode('value');
+    key.focus();
+    setTimeout(() => {
+      checkKey(key, value.value);
+    }, 300);
+  }
+}
+
+function chooseKey(event) {
+  if (quiz.counter < 6) {
+    let key = null;
+    if (event.type === 'click') {
+      key = event.target.closest('.quiz__keyboard_key');
+      if (key) {
+        changeKey(key);
+      }
+    }
+    if (event.type === 'keydown') {
+      const value = event.code.slice(3);
+      if (ALPHABET.includes(value)) {
+        key = document.querySelector(`.quiz__keyboard_key[value=${value}]`);
+        changeKey(key);
+      }
     }
   }
-  if (event.type === 'keydown') {
-    const value = event.code.slice(3);
-    if (ALPHABET.includes(value)) {
-      key = document.querySelector(`.quiz__keyboard_key[value=${value}]`);
-      key.click();
+}
+
+export function checkTimer(event) {
+  if (event.type === 'click' || (event.type === 'keydown' && ALPHABET.includes(event.code.slice(3)))) {
+    if (!quiz.timeStartClickBtn) {
+      quiz.timeStartClickBtn = window.performance.now();
+      chooseKey(event);
+    } else {
+      const timeSecondClick = window.performance.now();
+      if (timeSecondClick - quiz.timeStartClickBtn > 310) {
+        quiz.timeStartClickBtn = timeSecondClick;
+        chooseKey(event);
+      }
     }
   }
 }
