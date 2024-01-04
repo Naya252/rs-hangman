@@ -10,14 +10,27 @@ class Quiz {
     this.counter = counter;
     this.max = 6;
     this.timeStartClickBtn = null;
+    this.lastId = null;
   }
 
   changeId() {
+    if (!this.lastId) {
+      const lastId = localStorage.getItem('quizId');
+      if (lastId) {
+        this.lastId = lastId;
+      }
+    }
     const id = Math.floor(Math.random() * 10);
-    this.id = id + 1;
-    this.changeWord();
-    this.changeHint();
-    this.cleanCounter();
+    if (id + 1 !== +this.lastId) {
+      this.id = id + 1;
+      this.lastId = this.id;
+      localStorage.setItem('quizId', this.lastId);
+      this.changeWord();
+      this.changeHint();
+      this.cleanCounter();
+    } else {
+      this.changeId();
+    }
   }
 
   changeWord() {
