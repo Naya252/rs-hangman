@@ -15,7 +15,7 @@ import { createElement, createLetter, removeAllChildren } from '../../shared/hel
 
 function createKeyboard() {
   const keyboard = createElement('div', QUIZ_KEYBOARD_CLASS);
-  createLetter(ALPHABET, keyboard, QUIZ_KEYBOARD_KEY_CLASS, 'button');
+  createLetter(ALPHABET, keyboard, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
   const overlay = createElement('div', QUIZ_KEYBOARD_OVERLAY_CLASS);
   keyboard.append(overlay);
   return keyboard;
