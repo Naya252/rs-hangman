@@ -16,7 +16,7 @@ export function createElement(el, className) {
 export function createLetter(arr, parent, className, selector) {
   arr.forEach((el) => {
     const letter = createElement(selector, className);
-    if (className === QUIZ_KEYBOARD_KEY_CLASS) {
+    if (className.includes(QUIZ_KEYBOARD_KEY_CLASS)) {
       letter.innerText = el;
       letter.value = el;
       letter.type = 'button';
