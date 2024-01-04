@@ -11,7 +11,7 @@ export const IMAGES_FIGURE_PARTS = parts.map((el, i) => ({
   id: i + 1,
   name: el,
   class: `${IMAGE_CONTAINER_CLASS}_${el}`,
-  src: `${BASE_URL}src/img/${el}.svg`,
+  src: `${BASE_URL}/img/${el}.svg`,
 }));
 
 export const QUIZ_SECTION_CLASS = 'quiz';

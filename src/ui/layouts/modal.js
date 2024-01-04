@@ -62,7 +62,7 @@ export function createModal(value) {
 
   setTimeout(() => {
     modalContent.classList.add('content--active');
-    modalContent.style.backgroundImage = `url("${BASE_URL}src/img/crow2.svg")`;
+    modalContent.style.backgroundImage = `url("${BASE_URL}/img/crow2.svg")`;
     modalContent.style.backgroundSize = '20%';
     modalContent.style.backgroundPosition = '85% 30%';
     modalContent.style.backgroundRepeat = 'no-repeat';
