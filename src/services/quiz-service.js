@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import {
   QUIZ_DATA,
   ALPHABET,
@@ -8,13 +9,21 @@ import {
 } from '../shared/constants';
 import { creteHintContent, createWord, cleanKeyboard, toggleKeyboardOverly } from '../ui/layouts/quiz-section';
 import { createFigurePart, cleanGallows } from '../ui/layouts/gallows-section';
+import { createModal } from '../ui/layouts/modal';
 
+function openModal(val) {
+  toggleKeyboardOverly();
+  setTimeout(() => {
+    createModal(val);
+  }, 1000);
+}
 class Quiz {
-  constructor(id, word, hint, counter = 0) {
+  constructor(id, word, hint, counter = 0, openedCounter = 0) {
     this.id = id;
     this.word = word;
     this.hint = hint;
     this.counter = counter;
+    this.openedCounter = openedCounter;
     this.max = 6;
     this.timeStartClickBtn = null;
     this.lastId = null;
@@ -57,18 +66,15 @@ class Quiz {
     createFigurePart(this.counter, document.querySelector(`.${IMAGE_CONTAINER_CLASS}`));
 
     if (this.counter === 6) {
-      this.showModal();
+      openModal(false);
     }
   }
 
-  showModal() {
+  submitModal() {
+    this.cleanQuiz();
+    cleanGallows();
+    cleanKeyboard();
     toggleKeyboardOverly();
-    setTimeout(() => {
-      this.cleanQuiz();
-      cleanGallows();
-      cleanKeyboard();
-      toggleKeyboardOverly();
-    }, 1000);
   }
 
   printCounter() {
@@ -78,6 +84,7 @@ class Quiz {
 
   cleanCounter() {
     this.counter = 0;
+    this.openedCounter = 0;
     this.printCounter();
   }
 
@@ -96,6 +103,10 @@ function showLetters(letters) {
   letters.forEach((el) => {
     word.childNodes[el.idx].innerText = el.value;
   });
+  quiz.openedCounter += letters.length;
+  if (quiz.openedCounter === quiz.word.length) {
+    openModal(true);
+  }
 }
 
 function checkKey(key, value) {
@@ -109,6 +120,7 @@ function checkKey(key, value) {
         });
       }
     });
+
     showLetters(letters);
   } else {
     quiz.changeCounter();
