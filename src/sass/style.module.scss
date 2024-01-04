@@ -121,6 +121,29 @@
   height: 15%;
 }
 
+.gallows__image-container_crow,
+.gallows__image-container_crow3,
+.gallows__image-container_crow4 {
+  position: absolute;
+  width: 20%;
+  height: 15%;
+  top: -6.5%;
+  left: 30%;
+  transition: all 0.3s;
+}
+
+.gallows__image-container_crow2 {
+  left: 50%;
+}
+.gallows__image-container_crow3 {
+  left: 80%;
+  top: 90%;
+}
+.gallows__image-container_crow4 {
+  left: 70%;
+  width: 17%;
+}
+
 .quiz {
   display: flex;
   flex-direction: column;

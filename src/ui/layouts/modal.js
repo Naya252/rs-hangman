@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { createElement } from '../../shared/helpers';
 import { quiz } from '../../services/quiz-service';
+import { BASE_URL } from '../../shared/constants';
 
 function toInert() {
   document.querySelector('.container').setAttribute('inert', true);
@@ -61,6 +62,10 @@ export function createModal(value) {
 
   setTimeout(() => {
     modalContent.classList.add('content--active');
+    modalContent.style.backgroundImage = `url("${BASE_URL}src/img/crow2.svg")`;
+    modalContent.style.backgroundSize = '20%';
+    modalContent.style.backgroundPosition = '85% 30%';
+    modalContent.style.backgroundRepeat = 'no-repeat';
     toInert(modal);
   }, 100);
 }

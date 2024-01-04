@@ -6,7 +6,7 @@ export const GALLOWS_SECTION_CLASS = 'gallows';
 export const GALLOWS_TITLE_CLASS = `${GALLOWS_SECTION_CLASS}__title`;
 export const IMAGE_CONTAINER_CLASS = `${GALLOWS_SECTION_CLASS}__image-container`;
 
-const parts = ['gallows', 'head', 'body', 'hand-one', 'hand-two', 'leg-one', 'leg-two'];
+const parts = ['gallows', 'head', 'body', 'hand-one', 'hand-two', 'leg-one', 'leg-two', 'crow', 'crow3', 'crow4'];
 export const IMAGES_FIGURE_PARTS = parts.map((el, i) => ({
   id: i + 1,
   name: el,

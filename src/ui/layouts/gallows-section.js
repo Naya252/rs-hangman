@@ -10,14 +10,21 @@ export function createFigurePart(index, parent) {
   parent.append(part);
 }
 
+function createDefaultParts(parent) {
+  createFigurePart(0, parent);
+  createFigurePart(7, parent);
+  createFigurePart(8, parent);
+  createFigurePart(9, parent);
+}
+
 export function cleanGallows() {
   const parent = removeAllChildren(`.${IMAGE_CONTAINER_CLASS}`);
-  createFigurePart(0, parent);
+  createDefaultParts(parent);
 }
 
 function createFigure() {
   const imgContainer = createElement('div', IMAGE_CONTAINER_CLASS);
-  createFigurePart(0, imgContainer);
+  createDefaultParts(imgContainer);
 
   return imgContainer;
 }
