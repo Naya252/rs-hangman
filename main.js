@@ -2,7 +2,7 @@ import './src/sass/style.module.scss';
 import { createGallowsSection } from './src/ui/layouts/gallows-section';
 import { createQuizSection } from './src/ui/layouts/quiz-section';
 import { changeTitle } from './src/shared/helpers';
-import { quiz, chooseKey } from './src/services/quiz-service';
+import { quiz, checkTimer } from './src/services/quiz-service';
 
 const app = document.createElement('div');
 app.className = 'container';
@@ -23,21 +23,8 @@ window.addEventListener('resize', (event) => {
 });
 
 const keyboard = document.querySelector('.quiz__keyboard');
-keyboard.addEventListener('click', (event) => chooseKey(event));
-window.addEventListener('keydown', (event) => {
-  if (quiz.counter < 6) {
-    if (!quiz.timeStartClickBtn) {
-      quiz.timeStartClickBtn = window.performance.now();
-      chooseKey(event);
-    } else {
-      const timeSecondClick = window.performance.now();
-      if (timeSecondClick - quiz.timeStartClickBtn > 310) {
-        quiz.timeStartClickBtn = timeSecondClick;
-        chooseKey(event);
-      }
-    }
-  }
-});
+keyboard.addEventListener('click', (event) => checkTimer(event));
+window.addEventListener('keydown', (event) => checkTimer(event));
 
 setTimeout(() => {
   quiz.changeId();
