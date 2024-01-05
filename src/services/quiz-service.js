@@ -15,7 +15,7 @@ function openModal(val) {
   toggleKeyboardOverly();
   setTimeout(() => {
     createModal(val);
-  }, 1000);
+  }, 500);
 }
 class Quiz {
   constructor(id, word, hint, counter = 0, openedCounter = 0) {
@@ -134,7 +134,7 @@ function changeKey(key) {
     key.focus();
     setTimeout(() => {
       checkKey(key, value.value);
-    }, 300);
+    }, 10);
   }
 }
 
@@ -164,7 +164,7 @@ export function checkTimer(event) {
       chooseKey(event);
     } else {
       const timeSecondClick = window.performance.now();
-      if (timeSecondClick - quiz.timeStartClickBtn > 310) {
+      if (timeSecondClick - quiz.timeStartClickBtn > 10) {
         quiz.timeStartClickBtn = timeSecondClick;
         chooseKey(event);
       }
