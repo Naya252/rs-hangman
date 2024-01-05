@@ -43,7 +43,7 @@ export function changeTitle(curSize, lastSize) {
   }
   if ((curSize < 781 && !lastSize) || (curSize < 781 && lastSize >= 781)) {
     const title = createTitle(GALLOWS_TITLE_CLASS);
-    document.querySelector(`.${GALLOWS_SECTION_CLASS}`).append(title);
+    document.querySelector(`.${GALLOWS_SECTION_CLASS}`).prepend(title);
   }
 }
 
