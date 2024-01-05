@@ -109,7 +109,7 @@
   }
 
   .gallows__image-container {
-    margin: 1rem auto 2rem auto;
+    margin: 1rem auto;
   }
 }
 
@@ -207,6 +207,12 @@
 @media only screen and (max-width: $breakpoint-lg) {
   .quiz {
     padding-left: $quiz-pl-lg;
+  }
+}
+
+@media only screen and (max-width: $breakpoint-xs) {
+  .quiz {
+    gap: 0;
   }
 }
 
