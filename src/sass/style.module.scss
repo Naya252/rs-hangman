@@ -311,6 +311,7 @@
   color: $light-color;
   cursor: pointer;
   transition: all 0.3s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .quiz__keyboard_key {
