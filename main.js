@@ -25,7 +25,7 @@ window.addEventListener('resize', (event) => {
 
 const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
 keyboard.addEventListener('click', (event) => checkTimer(event));
-window.addEventListener('keydown', (event) => checkTimer(event));
+document.addEventListener('keydown', (event) => checkTimer(event));
 
 setTimeout(() => {
   quiz.changeId();
