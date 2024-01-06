@@ -5,29 +5,32 @@ import { changeTitle } from './src/shared/helpers';
 import { quiz, checkTimer } from './src/services/quiz-service';
 import { QUIZ_KEYBOARD_CLASS } from './src/shared/constants';
 
+// Create html
 const app = document.createElement('div');
 app.className = 'container';
-
 const gallowSection = createGallowsSection();
 const quizSection = createQuizSection();
 app.append(gallowSection);
 app.append(quizSection);
-
 document.querySelector('.body').append(app);
 
+// Change title
 let size = window.innerWidth;
 changeTitle(size);
-
 window.addEventListener('resize', (event) => {
   changeTitle(event.target.innerWidth, size);
   size = event.target.innerWidth;
 });
+
+// Save passed quizes to LocalStorage
 window.addEventListener('beforeunload', (event) => quiz.saveToLocalStorage(event));
 
+// Check selected letters
 const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
 keyboard.addEventListener('click', (event) => checkTimer(event));
 document.addEventListener('keydown', (event) => checkTimer(event));
 
+// Start game
 setTimeout(() => {
-  quiz.checkPassed();
+  quiz.checkLocalStorage();
 }, 100);

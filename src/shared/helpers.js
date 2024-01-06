@@ -7,12 +7,29 @@ import {
   QUIZ_KEYBOARD_KEY_CLASS,
 } from './constants';
 
-export function createElement(el, className) {
-  const element = document.createElement(el);
+/**
+ * Create element for DOM
+ *
+ * @param {String} selector html tag
+ * @param {String} className class/es for new element
+ * @return {Element} created element
+ *
+ */
+export function createElement(selector, className) {
+  const element = document.createElement(selector);
   element.className = className;
   return element;
 }
 
+/**
+ * Create letters of the keyboard/qiuz word
+ *
+ * @param {Array} arr alphabet/quiz word
+ * @param {Element} parent DOM element - parent of the letter
+ * @param {String} className class name of the letter
+ * @param {String} selector html tag of the letter
+ *
+ */
 export function createLetter(arr, parent, className, selector) {
   arr.forEach((el) => {
     const letter = createElement(selector, className);
@@ -25,6 +42,13 @@ export function createLetter(arr, parent, className, selector) {
   });
 }
 
+/**
+ * Create h1
+ *
+ * @param {String} className class of the h1
+ * @return {Element} created h1
+ *
+ */
 function createTitle(className) {
   const element = document.querySelector('h1');
   if (element) {
@@ -36,6 +60,13 @@ function createTitle(className) {
   return title;
 }
 
+/**
+ * Toggle h1
+ *
+ * @param {Number} curSize current size of the page
+ * @param {Number} lastSize page saze before resize
+ *
+ */
 export function changeTitle(curSize, lastSize) {
   if ((curSize >= 781 && !lastSize) || (curSize >= 781 && lastSize <= 780)) {
     const title = createTitle(QUIZ_TITLE_CLASS);
@@ -47,6 +78,13 @@ export function changeTitle(curSize, lastSize) {
   }
 }
 
+/**
+ * Remove all children of the DOM element
+ *
+ * @param {String} parentSelector selector of the DOM element
+ * @return {Element} DOM element without child
+ *
+ */
 export function removeAllChildren(parentSelector) {
   const parent = document.querySelector(`${parentSelector}`);
   parent.innerHTML = '';

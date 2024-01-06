@@ -3,14 +3,26 @@ import { createElement } from '../../shared/helpers';
 import { quiz } from '../../services/quiz-service';
 import { BASE_URL } from '../../shared/constants';
 
+/**
+ * Add inert attribute to page (without modal)
+ *
+ */
 function toInert() {
   document.querySelector('.container').setAttribute('inert', true);
 }
 
+/**
+ * Remove inert attribute from page
+ *
+ */
 function fromInert() {
   document.querySelector('.container').removeAttribute('inert');
 }
 
+/**
+ * Remove modal from body
+ *
+ */
 export function removeModal() {
   document.querySelector('body').classList.remove('scroll-not-visible');
   const content = document.querySelector('.modal__content');
@@ -25,13 +37,20 @@ export function removeModal() {
     setTimeout(() => {
       if (document.querySelector('.modal')) {
         document.querySelector('.modal').remove();
+        // Start new game
         quiz.submitModal();
       }
     }, 100);
   }, 100);
 }
 
-export function createModal(value) {
+/**
+ * Create modal and add modal to body
+ *
+ * @param {Boolean} isWinning game result
+ *
+ */
+export function createModal(isWinning) {
   const modal = createElement('div', 'modal');
   const modalWrap = createElement('div', 'modal__wrap');
   const modalContent = createElement('div', 'modal__content');
@@ -39,7 +58,7 @@ export function createModal(value) {
   const modalP = createElement('p', 'modal__content_p');
   modalP.innerText = `Answer: ${quiz.word.join('').toUpperCase()}`;
 
-  if (value) {
+  if (isWinning) {
     modalTitle.innerText = 'Winning!';
   } else {
     modalTitle.innerText = 'Losing...';
@@ -60,8 +79,10 @@ export function createModal(value) {
   modal.classList.add('modal--active');
   modalBtn.addEventListener('click', removeModal);
 
+  // Open modal with transition
   setTimeout(() => {
     modalContent.classList.add('content--active');
+    // Add crown
     modalContent.style.backgroundImage = `url("${BASE_URL}/img/crow2.svg")`;
     modalContent.style.backgroundSize = '20%';
     modalContent.style.backgroundPosition = '85% 30%';
