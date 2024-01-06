@@ -29,33 +29,33 @@ export const QUIZ_KEYBOARD_CLASS = `${QUIZ_SECTION_CLASS}__keyboard`;
 export const QUIZ_KEYBOARD_KEY_CLASS = `${QUIZ_KEYBOARD_CLASS}_key`;
 export const QUIZ_KEYBOARD_OVERLAY_CLASS = `${QUIZ_KEYBOARD_CLASS}_overlay`;
 
-export const ALPHABET = [
-  'A',
-  'B',
-  'C',
-  'D',
+export const ALPHABET_EN = [
+  'Q',
+  'W',
   'E',
+  'R',
+  'T',
+  'Y',
+  'U',
+  'I',
+  'O',
+  'P',
+  'A',
+  'S',
+  'D',
   'F',
   'G',
   'H',
-  'I',
   'J',
   'K',
   'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
   'Z',
+  'X',
+  'C',
+  'V',
+  'B',
+  'N',
+  'M',
 ];
 
 export const QUIZ_DATA = [
@@ -130,3 +130,22 @@ export const QUIZ_DATA = [
     hintRu: 'Эта птица способна нырять на глубину до 6 метров',
   },
 ];
+
+/**
+ * KeyA - a on a US keyboard.
+ *        q on an AZERTY (e.g., French) keyboard.
+ *
+ * KeyQ - q on a US keyboard.
+ *        a on an AZERTY (e.g., French) keyboard.
+ *
+ * KeyW - w on a US keyboard.
+ *        z on an AZERTY (e.g., French) keyboard.
+ *
+ * KeyY - y on a US keyboard.
+ *        z on a QWERTZ (e.g., German) keyboard.
+ *
+ * KeyZ - z on a US keyboard.
+ *        w on an AZERTY (e.g., French) keyboard.
+ *        y on a QWERTZ (e.g., German) keyboard.
+ */
+export const NON_NORMATIVE_LETTERS = ['KeyA', 'KeyQ', 'KeyW', 'KeyY', 'KeyZ'];

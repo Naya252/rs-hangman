@@ -1,5 +1,6 @@
+/* eslint-disable no-restricted-syntax */
 import {
-  ALPHABET,
+  ALPHABET_EN,
   QUIZ_SECTION_CLASS,
   QUIZ_WORD_CLASS,
   QUIZ_LETTER_CLASS,
@@ -50,8 +51,19 @@ export function creteHintContent(text) {
  */
 function createKeyboard() {
   const keyboard = createElement('div', QUIZ_KEYBOARD_CLASS);
-  createLetter(ALPHABET, keyboard, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
+  const line1 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line1 line`);
+  const line2 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line2 line`);
+  const line3 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line3 line`);
+
+  createLetter(ALPHABET_EN.slice(0, 10), line1, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
+  createLetter(ALPHABET_EN.slice(10, 19), line2, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
+  createLetter(ALPHABET_EN.slice(19), line3, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
+
   const overlay = createElement('div', QUIZ_KEYBOARD_OVERLAY_CLASS);
+
+  keyboard.append(line1);
+  keyboard.append(line2);
+  keyboard.append(line3);
   keyboard.append(overlay);
   return keyboard;
 }
@@ -61,11 +73,9 @@ function createKeyboard() {
  *
  */
 export function cleanKeyboard() {
-  const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
-  let count = keyboard.childNodes.length;
-  while (count > 0) {
-    count -= 1;
-    keyboard.childNodes[count].removeAttribute('disabled');
+  const keys = document.querySelectorAll(`.${QUIZ_KEYBOARD_KEY_CLASS}[disabled]`);
+  for (const key of keys) {
+    key.removeAttribute('disabled');
   }
 }
 
