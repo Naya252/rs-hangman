@@ -22,7 +22,7 @@ window.addEventListener('resize', (event) => {
   changeTitle(event.target.innerWidth, size);
   size = event.target.innerWidth;
 });
-window.addEventListener('beforeunload', (event) => quiz.savePassedQuizes(event));
+window.addEventListener('beforeunload', (event) => quiz.saveToLocalStorage(event));
 
 const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
 keyboard.addEventListener('click', (event) => checkTimer(event));

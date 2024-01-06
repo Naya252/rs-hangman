@@ -30,9 +30,12 @@ class Quiz {
     this.data = [...QUIZ_DATA];
   }
 
-  savePassedQuizes() {
+  saveToLocalStorage() {
     if (this.passedQuizes.length) {
       localStorage.setItem('passed', JSON.stringify(this.passedQuizes));
+    }
+    if (this.id) {
+      localStorage.setItem('quizId', this.id);
     }
   }
 
@@ -85,7 +88,6 @@ class Quiz {
     const idx = Math.floor(Math.random() * this.data.length);
     this.id = this.data[idx].id;
 
-    localStorage.setItem('quizId', this.id);
     this.changePassedQiuz(this.id);
     this.changeWord();
     this.changeHint();
