@@ -26,27 +26,70 @@ class Quiz {
     this.openedCounter = openedCounter;
     this.max = 6;
     this.timeStartClickBtn = null;
-    this.lastId = null;
+    this.passedQuizes = [];
+    this.data = [...QUIZ_DATA];
   }
 
-  changeId() {
-    if (!this.lastId) {
+  savePassedQuizes() {
+    if (this.passedQuizes.length) {
+      localStorage.setItem('passed', JSON.stringify(this.passedQuizes));
+    }
+  }
+
+  checkLocalStorage() {
+    const passed = localStorage.getItem('passed');
+
+    if (passed) {
+      const arr = JSON.parse(passed);
+      if (arr.length) {
+        arr.forEach((el) => {
+          this.changePassedQiuz(+el);
+        });
+      }
+    } else {
       const lastId = localStorage.getItem('quizId');
       if (lastId) {
-        this.lastId = lastId;
+        this.changePassedQiuz(+lastId);
       }
     }
-    const id = Math.floor(Math.random() * 10);
-    if (id + 1 !== +this.lastId) {
-      this.id = id + 1;
-      this.lastId = this.id;
-      localStorage.setItem('quizId', this.lastId);
-      this.changeWord();
-      this.changeHint();
-      this.cleanCounter();
+
+    this.changeId();
+  }
+
+  changeData(id) {
+    this.data = this.data.filter((el) => el.id !== id);
+    if (this.passedQuizes.length === 10) {
+      this.data = [...QUIZ_DATA];
+    }
+  }
+
+  changePassedQiuz(id) {
+    this.passedQuizes.push(id);
+    this.changeData(id);
+    if (this.passedQuizes.length === 10) {
+      this.passedQuizes = [];
+      this.changeData(id);
+      this.changePassedQiuz(id);
+    }
+  }
+
+  checkPassed() {
+    if (this.passedQuizes.length === 0) {
+      this.checkLocalStorage();
     } else {
       this.changeId();
     }
+  }
+
+  changeId() {
+    const idx = Math.floor(Math.random() * this.data.length);
+    this.id = this.data[idx].id;
+
+    localStorage.setItem('quizId', this.id);
+    this.changePassedQiuz(this.id);
+    this.changeWord();
+    this.changeHint();
+    this.cleanCounter();
   }
 
   changeWord() {
