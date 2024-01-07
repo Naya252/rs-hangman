@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import {
   TITLE,
   GALLOWS_SECTION_CLASS,
@@ -6,6 +7,7 @@ import {
   QUIZ_TITLE_CLASS,
   QUIZ_KEYBOARD_KEY_CLASS,
 } from './constants';
+import { quiz } from '../services/quiz-service';
 
 /**
  * Create element for DOM
@@ -32,13 +34,22 @@ export function createElement(selector, className) {
  */
 export function createLetter(arr, parent, className, selector) {
   arr.forEach((el) => {
-    const letter = createElement(selector, className);
-    if (className.includes(QUIZ_KEYBOARD_KEY_CLASS)) {
-      letter.innerText = el;
-      letter.value = el;
-      letter.type = 'button';
+    let letter;
+    if (!className.includes(QUIZ_KEYBOARD_KEY_CLASS)) {
+      letter = createElement(selector, className);
     }
-    parent.append(letter);
+    if (className.includes(QUIZ_KEYBOARD_KEY_CLASS) && el[quiz.lang]) {
+      letter = createElement(selector, className);
+      letter.type = 'button';
+      if (letter.hasAttribute('type')) {
+        letter.innerText = el[quiz.lang];
+        letter.value = el[quiz.lang];
+        letter.code = el[quiz.code];
+      }
+    }
+    if (letter) {
+      parent.append(letter);
+    }
   });
 }
 
