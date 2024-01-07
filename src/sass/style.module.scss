@@ -61,8 +61,6 @@
   }
 }
 
-
-
 /***********************************************************************************
  * Gallows section
  ***********************************************************************************/
@@ -201,7 +199,7 @@
   margin: 0 auto;
 }
 
-  @media screen and (orientation: portrait) {
+@media screen and (orientation: portrait) {
   .quiz {
     height: 50dvh;
   }
@@ -284,9 +282,7 @@
   margin: 0 auto;
   position: relative;
 
-  .quiz__keyboard-line1,
-  .quiz__keyboard-line2,
-  .quiz__keyboard-line3 {
+  .line {
     display: flex;
     gap: 8px;
   }
@@ -323,6 +319,9 @@
   width: 2.8rem;
   position: relative;
 }
+.quiz__keyboard_key[name='Space'] {
+  width: 22rem;
+}
 .quiz__keyboard_key:not([disabled]):hover {
   border-color: $accent-color;
   color: $light-color-secondary;
@@ -355,9 +354,7 @@
 @media screen and (max-width: $breakpoint-sm) {
   .quiz__keyboard {
     gap: 4px;
-    .quiz__keyboard-line1,
-    .quiz__keyboard-line2,
-    .quiz__keyboard-line3 {
+    .line {
       gap: 4px;
     }
   }
