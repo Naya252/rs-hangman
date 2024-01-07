@@ -35,6 +35,7 @@
   .container {
     flex-direction: column;
     max-height: 1000px;
+    padding: 8px;
   }
 }
 
@@ -195,13 +196,19 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
-  width: clamp(280px, 60%, 70% - 80px);
+  width: clamp(280px, 90%, 100% - 80px);
   margin: 0 auto;
 }
 
 @media screen and (orientation: portrait) {
   .quiz {
     height: 50dvh;
+  }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+  .quiz {
+    width: clamp(280px, 95%, 100% - 16px);
   }
 }
 
@@ -271,19 +278,28 @@
   color: $accent-color;
 }
 
+@media screen and (max-width: $breakpoint-md) {
+  .quiz__hint_text,
+  .quiz__hint_counter {
+    font-size: 1rem;
+  }
+}
+
 .quiz__keyboard {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: clamp(280px, 520px, 100%);
-  min-height: 136px;
+  width: clamp(280px, 620px, 100%);
   margin: 0 auto;
   position: relative;
 
   .line {
     display: flex;
+    justify-content: center;
+    width: 100%;
     gap: 8px;
   }
 
@@ -351,23 +367,40 @@
   }
 }
 
+@media screen and (max-width: $breakpoint-md) {
+  .quiz__keyboard_key {
+    width: calc(100% / 12);
+    height: 2.4rem;
+  }
+
+  .quiz__keyboard_key[name='Space'] {
+    width: 14rem;
+  }
+}
+
 @media screen and (max-width: $breakpoint-sm) {
   .quiz__keyboard {
-    gap: 4px;
     .line {
       gap: 4px;
     }
   }
-
   .quiz__keyboard_key {
-    width: 1.9rem;
-    position: relative;
+    font-size: 0.8rem;
+    height: 2rem;
+  }
+
+  .quiz__keyboard_key[name='Space'] {
+    width: 14rem;
   }
 }
 
 @media screen and (max-width: $breakpoint-xs) {
   .quiz__keyboard_key {
-    width: 1.8rem;
-    position: relative;
+    font-size: 0.65rem;
+    height: 1.8rem;
+  }
+
+  .quiz__keyboard_key[name='Space'] {
+    width: 12rem;
   }
 }
