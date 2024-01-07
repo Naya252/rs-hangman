@@ -1,6 +1,7 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
 import {
-  ALPHABET_EN,
+  ALPHABET,
   QUIZ_SECTION_CLASS,
   QUIZ_WORD_CLASS,
   QUIZ_LETTER_CLASS,
@@ -11,6 +12,7 @@ import {
   QUIZ_KEYBOARD_CLASS,
   QUIZ_KEYBOARD_KEY_CLASS,
   QUIZ_KEYBOARD_OVERLAY_CLASS,
+  KEY_INDEXES,
 } from '../../shared/constants';
 import { createElement, createLetter, removeAllChildren } from '../../shared/helpers';
 
@@ -44,6 +46,26 @@ export function creteHintContent(text) {
 }
 
 /**
+ * Create keys of keyboard
+ *
+ */
+export function changeKeysLang() {
+  const lines = document.querySelectorAll('.line');
+  let i = 0;
+  while (i < lines.length) {
+    removeAllChildren(`.quiz__keyboard-line${i + 1}`);
+
+    createLetter(
+      ALPHABET.slice(KEY_INDEXES[i].first, KEY_INDEXES[i].last),
+      lines[i],
+      `${QUIZ_KEYBOARD_KEY_CLASS} btn`,
+      'button',
+    );
+    i += 1;
+  }
+}
+
+/**
  * Create keyboard
  *
  * @return {Element} keyboard
@@ -54,16 +76,14 @@ function createKeyboard() {
   const line1 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line1 line`);
   const line2 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line2 line`);
   const line3 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line3 line`);
-
-  createLetter(ALPHABET_EN.slice(0, 10), line1, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
-  createLetter(ALPHABET_EN.slice(10, 19), line2, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
-  createLetter(ALPHABET_EN.slice(19), line3, `${QUIZ_KEYBOARD_KEY_CLASS} btn`, 'button');
+  const line4 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line4 line`);
 
   const overlay = createElement('div', QUIZ_KEYBOARD_OVERLAY_CLASS);
 
   keyboard.append(line1);
   keyboard.append(line2);
   keyboard.append(line3);
+  keyboard.append(line4);
   keyboard.append(overlay);
   return keyboard;
 }
