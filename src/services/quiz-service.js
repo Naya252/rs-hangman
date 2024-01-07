@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 /* eslint-disable import/no-cycle */
 import {
   QUIZ_DATA,
@@ -6,8 +7,15 @@ import {
   QUIZ_WORD_CLASS,
   QUIZ_HINT_COUNTER_CLASS,
   QUIZ_KEYBOARD_KEY_CLASS,
+  NON_NORMATIVE_LETTERS,
 } from '../shared/constants';
-import { creteHintContent, createWord, cleanKeyboard, toggleKeyboardOverly } from '../ui/layouts/quiz-section';
+import {
+  creteHintContent,
+  createWord,
+  cleanKeyboard,
+  toggleKeyboardOverly,
+  changeKeysLang,
+} from '../ui/layouts/quiz-section';
 import { createFigurePart, cleanGallows } from '../ui/layouts/gallows-section';
 import { createModal } from '../ui/layouts/modal';
 
@@ -36,6 +44,24 @@ class Quiz {
     this.timeStartClickBtn = null;
     this.passedQuizes = [];
     this.data = [...QUIZ_DATA];
+    this.lang = null;
+  }
+
+  /**
+   * Change quiz lang
+   *
+   */
+  changeLang(lang = false) {
+    if ((lang && lang === 'ru') || (!lang && this.lang === 'en')) {
+      this.lang = 'ru';
+      changeKeysLang();
+      return;
+    }
+    if ((lang && lang === 'en') || (!lang && this.lang === 'ru')) {
+      this.lang = 'en';
+      changeKeysLang();
+      return;
+    }
   }
 
   /**
@@ -49,6 +75,9 @@ class Quiz {
     if (this.id) {
       localStorage.setItem('quizId', this.id);
     }
+    if (this.lang) {
+      localStorage.setItem('lang', this.lang);
+    }
   }
 
   /**
@@ -56,6 +85,13 @@ class Quiz {
    *
    */
   checkLocalStorage() {
+    const lang = localStorage.getItem('lang');
+    if (lang) {
+      this.changeLang(lang);
+    } else {
+      this.changeLang('en');
+    }
+
     const passed = localStorage.getItem('passed');
 
     if (passed) {
@@ -117,6 +153,17 @@ class Quiz {
     // Add data of the new quiz to page
     this.changeWord();
     this.changeHint();
+    // add default values to mistake counter
+    this.cleanCounter();
+  }
+
+  /**
+   * Get current item from full list of qiuz data
+   *
+   */
+  getCurrenntQuiz() {
+    const data = QUIZ_DATA.filter((el) => el.id === this.id);
+    return data[0];
   }
 
   /**
@@ -124,7 +171,7 @@ class Quiz {
    *
    */
   changeWord() {
-    this.word = QUIZ_DATA[this.id - 1].wordEn.split('');
+    this.word = this.getCurrenntQuiz().word[this.lang].split('');
     createWord(this.word);
     console.log(this.word.join(''));
   }
@@ -134,7 +181,7 @@ class Quiz {
    *
    */
   changeHint() {
-    this.hint = QUIZ_DATA[this.id - 1].hintEn;
+    this.hint = this.getCurrenntQuiz().hint[this.lang];
     creteHintContent(this.hint);
   }
 
@@ -150,6 +197,10 @@ class Quiz {
     if (this.counter === 6) {
       const isWinning = false;
       openModal(isWinning);
+    }
+    if (this.counter !== 0) {
+      const key = document.querySelector('.quiz__keyboard_key[name="Space"]');
+      key.setAttribute('disabled', '');
     }
   }
 
@@ -189,8 +240,6 @@ class Quiz {
   submitModal() {
     // add default values to quiz
     this.cleanQuiz();
-    // add default values to mistake counter
-    this.cleanCounter();
     // remove body parts
     cleanGallows();
     // remove disabled
@@ -230,24 +279,41 @@ function showLetters(letters) {
  *
  */
 function checkKey(key, value) {
-  if (quiz.word.includes(value.toLowerCase())) {
-    const letters = [];
-    quiz.word.forEach((el, i) => {
-      if (el === value.toLowerCase()) {
-        letters.push({
-          value,
-          idx: i,
-        });
-      }
-    });
-    // open correct letters of the quiz word
-    showLetters(letters);
-  } else {
-    // change the mistakes counter
-    quiz.changeCounter();
+  if (value !== 'English' && value !== 'Русский') {
+    if (quiz.word.includes(value.toLowerCase())) {
+      const letters = [];
+      quiz.word.forEach((el, i) => {
+        if (el === value.toLowerCase()) {
+          letters.push({
+            value,
+            idx: i,
+          });
+        }
+      });
+      // open correct letters of the quiz word
+      showLetters(letters);
+    } else {
+      // change the mistakes counter
+      quiz.changeCounter();
+    }
+    // add disabled to the selected letter of the quiz keyboard
+    key.setAttribute('disabled', '');
   }
-  // add disabled to the selected letter of the quiz keyboard
-  key.setAttribute('disabled', '');
+}
+
+/**
+ * Key up on space of the real keyboard
+ *
+ */
+function clickOnSpace() {
+  const key = document.querySelector('.quiz__keyboard_key[name="Space"]:not([disabled=""]');
+  if (key) {
+    setTimeout(() => {
+      quiz.changeLang();
+      quiz.changeWord();
+      quiz.changeHint();
+    }, 100);
+  }
 }
 
 /**
@@ -258,12 +324,32 @@ function checkKey(key, value) {
  */
 function changeKey(key) {
   if (!key.hasAttribute('disabled')) {
-    const value = key.getAttributeNode('value');
+    const value = key.getAttribute('value');
     key.focus();
-    setTimeout(() => {
-      checkKey(key, value.value);
-    }, 10);
+
+    if (value !== 'English' && value !== 'Русский') {
+      setTimeout(() => {
+        checkKey(key, value);
+      }, 100);
+    }
   }
+}
+
+/**
+ * Check non normative letter
+ *
+ * @param {Event} event keydown
+ *
+ */
+function checkSpecialKey(event) {
+  let letter;
+  if (ALPHABET.includes(event.key.toUpperCase())) {
+    letter = event.key.toUpperCase();
+  } else {
+    letter = event.code.slice(3);
+  }
+
+  return letter;
 }
 
 /**
@@ -279,12 +365,22 @@ function chooseKey(event) {
       key = event.target.closest(`.${QUIZ_KEYBOARD_KEY_CLASS}`);
       if (key) {
         changeKey(key);
+
+        if (key.getAttribute('name') === 'Space') {
+          clickOnSpace();
+        }
       }
     }
     if (event.type === 'keydown') {
-      const value = event.code.slice(3);
-      if (ALPHABET.includes(value)) {
-        key = document.querySelector(`.${QUIZ_KEYBOARD_KEY_CLASS}[value=${value}]`);
+      let letter;
+      if (NON_NORMATIVE_LETTERS.includes(event.code)) {
+        letter = checkSpecialKey(event);
+      } else {
+        letter = ALPHABET.filter((el) => el.code === event.code);
+      }
+
+      if (letter) {
+        key = document.querySelector(`.${QUIZ_KEYBOARD_KEY_CLASS}[value=${letter[0][quiz.lang]}]`);
         changeKey(key);
       }
     }
@@ -296,7 +392,7 @@ function chooseKey(event) {
  *
  */
 export function checkTimer(event) {
-  if (event.type === 'click' || (event.type === 'keydown' && ALPHABET.includes(event.code.slice(3)))) {
+  if (event.type === 'click' || (event.type === 'keydown' && ALPHABET.some((el) => el.code === event.code))) {
     if (!quiz.timeStartClickBtn) {
       quiz.timeStartClickBtn = window.performance.now();
       chooseKey(event);
@@ -307,5 +403,8 @@ export function checkTimer(event) {
         chooseKey(event);
       }
     }
+  }
+  if (event.type === 'keyup' && event.code === 'Space') {
+    clickOnSpace();
   }
 }
