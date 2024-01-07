@@ -190,17 +190,19 @@ class Quiz {
    *
    */
   changeCounter() {
-    this.counter += 1;
-    this.printCounter();
-    createFigurePart(this.counter, document.querySelector(`.${IMAGE_CONTAINER_CLASS}`));
+    if (this.counter < 7) {
+      this.counter += 1;
+      this.printCounter();
+      createFigurePart(this.counter, document.querySelector(`.${IMAGE_CONTAINER_CLASS}`));
 
-    if (this.counter === 6) {
-      const isWinning = false;
-      openModal(isWinning);
-    }
-    if (this.counter !== 0) {
-      const key = document.querySelector('.quiz__keyboard_key[name="Space"]');
-      key.setAttribute('disabled', '');
+      if (this.counter === 6) {
+        const isWinning = false;
+        openModal(isWinning);
+      }
+      if (this.counter !== 0) {
+        const key = document.querySelector('.quiz__keyboard_key[name="Space"]');
+        key.setAttribute('disabled', '');
+      }
     }
   }
 
@@ -312,7 +314,8 @@ function clickOnSpace() {
       quiz.changeLang();
       quiz.changeWord();
       quiz.changeHint();
-    }, 100);
+      quiz.printCounter();
+    }, 50);
   }
 }
 
@@ -331,7 +334,7 @@ function changeKey(key) {
       if (value !== 'English' && value !== 'Русский') {
         setTimeout(() => {
           checkKey(key, value);
-        }, 100);
+        }, 50);
       }
     }
   }
@@ -400,7 +403,7 @@ export function checkTimer(event) {
       chooseKey(event);
     } else {
       const timeSecondClick = window.performance.now();
-      if (timeSecondClick - quiz.timeStartClickBtn > 10) {
+      if (timeSecondClick - quiz.timeStartClickBtn > 50) {
         quiz.timeStartClickBtn = timeSecondClick;
         chooseKey(event);
       }
