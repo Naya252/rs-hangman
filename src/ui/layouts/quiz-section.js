@@ -13,8 +13,10 @@ import {
   QUIZ_KEYBOARD_KEY_CLASS,
   QUIZ_KEYBOARD_OVERLAY_CLASS,
   KEY_INDEXES,
+  TEXT,
 } from '../../shared/constants';
 import { createElement, createLetter, removeAllChildren } from '../../shared/helpers';
+import { quiz } from '../../services/quiz-service';
 
 /**
  * Create quiz word
@@ -38,7 +40,7 @@ export function creteHintContent(text) {
   const p = createElement('p', QUIZ_HINT_TEXT_CLASS);
   p.innerText = text;
   const infoCounter = createElement('p', QUIZ_HINT_INFO_CLASS);
-  infoCounter.innerText = 'Incorrect gueses ';
+  infoCounter.innerText = TEXT[0].counterText[quiz.lang];
   const counter = createElement('b', QUIZ_HINT_COUNTER_CLASS);
   infoCounter.append(counter);
   parent.append(p);

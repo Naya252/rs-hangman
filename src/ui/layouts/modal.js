@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { createElement } from '../../shared/helpers';
 import { quiz } from '../../services/quiz-service';
-import { BASE_URL } from '../../shared/constants';
+import { BASE_URL, TEXT } from '../../shared/constants';
 
 /**
  * Add inert attribute to page (without modal)
@@ -56,15 +56,15 @@ export function createModal(isWinning) {
   const modalContent = createElement('div', 'modal__content');
   const modalTitle = createElement('h3', 'modal__content_title');
   const modalP = createElement('p', 'modal__content_p');
-  modalP.innerText = `Answer: ${quiz.word.join('').toUpperCase()}`;
+  modalP.innerText = `${TEXT[1].modal.answer[quiz.lang]}: ${quiz.word.join('').toUpperCase()}`;
 
   if (isWinning) {
-    modalTitle.innerText = 'Winning!';
+    modalTitle.innerText = TEXT[1].modal.win[quiz.lang];
   } else {
-    modalTitle.innerText = 'Losing...';
+    modalTitle.innerText = TEXT[1].modal.loss[quiz.lang];
   }
   const modalBtn = createElement('button', 'modal__content_btn btn');
-  modalBtn.innerText = 'Play again';
+  modalBtn.innerText = TEXT[1].modal.again[quiz.lang];
 
   modalContent.append(modalTitle);
   modalContent.append(modalP);

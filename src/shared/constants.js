@@ -169,3 +169,32 @@ export const ALPHABET = [
 export const NON_NORMATIVE_LETTERS = ['KeyA', 'KeyQ', 'KeyW', 'KeyY', 'KeyZ'];
 
 export const KEY_INDEXES = [{ first: 0, last: 12 }, { first: 12, last: 23 }, { first: 23, last: 32 }, { first: 32 }];
+
+export const TEXT = [
+  {
+    counterText: {
+      en: 'Incorrect gueses ',
+      ru: 'Неверное предположение ',
+    },
+  },
+  {
+    modal: {
+      answer: {
+        en: 'Answer',
+        ru: 'Ответ',
+      },
+      win: {
+        en: 'Winning!',
+        ru: 'Победа!',
+      },
+      loss: {
+        en: 'Losing...',
+        ru: 'Проигрыш...',
+      },
+      again: {
+        en: 'Play again',
+        ru: 'Сыграть еще',
+      },
+    },
+  },
+];
