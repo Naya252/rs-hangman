@@ -29,6 +29,7 @@ window.addEventListener('beforeunload', (event) => quiz.saveToLocalStorage(event
 const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
 keyboard.addEventListener('click', (event) => checkTimer(event));
 document.addEventListener('keydown', (event) => checkTimer(event));
+document.addEventListener('keyup', (event) => checkTimer(event));
 
 // Start game
 setTimeout(() => {
