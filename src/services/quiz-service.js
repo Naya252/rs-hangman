@@ -348,10 +348,12 @@ function changeKey(key) {
  */
 function checkSpecialKey(event) {
   let letter;
-  if (event.code.slice(3) === event.key.toUpperCase()) {
-    letter = ALPHABET.filter((el) => el.code === event.code);
+  const key = event.key.toUpperCase();
+
+  if (ALPHABET.some((el) => el.ru === key || el.en === key)) {
+    letter = ALPHABET.filter((el) => el.ru === event.key.toUpperCase() || el.en === event.key.toUpperCase());
   } else {
-    letter = ALPHABET.filter((el) => el[quiz.lang] === event.key.toUpperCase());
+    letter = ALPHABET.filter((el) => el.code === event.code);
   }
 
   return letter;
