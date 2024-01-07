@@ -323,14 +323,16 @@ function clickOnSpace() {
  *
  */
 function changeKey(key) {
-  if (!key.hasAttribute('disabled')) {
-    const value = key.getAttribute('value');
-    key.focus();
+  if (key) {
+    if (!key.hasAttribute('disabled')) {
+      const value = key.getAttribute('value');
+      key.focus();
 
-    if (value !== 'English' && value !== 'Русский') {
-      setTimeout(() => {
-        checkKey(key, value);
-      }, 100);
+      if (value !== 'English' && value !== 'Русский') {
+        setTimeout(() => {
+          checkKey(key, value);
+        }, 100);
+      }
     }
   }
 }
@@ -343,10 +345,10 @@ function changeKey(key) {
  */
 function checkSpecialKey(event) {
   let letter;
-  if (ALPHABET.includes(event.key.toUpperCase())) {
-    letter = event.key.toUpperCase();
+  if (event.code.slice(3) === event.key.toUpperCase()) {
+    letter = ALPHABET.filter((el) => el.code === event.code);
   } else {
-    letter = event.code.slice(3);
+    letter = ALPHABET.filter((el) => el[quiz.lang] === event.key.toUpperCase());
   }
 
   return letter;
