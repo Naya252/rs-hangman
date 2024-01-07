@@ -44,7 +44,7 @@ export function createLetter(arr, parent, className, selector) {
       if (letter.hasAttribute('type')) {
         letter.innerText = el[quiz.lang];
         letter.value = el[quiz.lang];
-        letter.code = el[quiz.code];
+        letter.name = el.code;
       }
     }
     if (letter) {
