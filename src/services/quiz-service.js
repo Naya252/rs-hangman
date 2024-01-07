@@ -199,10 +199,6 @@ class Quiz {
         const isWinning = false;
         openModal(isWinning);
       }
-      if (this.counter !== 0) {
-        const key = document.querySelector('.quiz__keyboard_key[name="Space"]');
-        key.setAttribute('disabled', '');
-      }
     }
   }
 
@@ -300,6 +296,10 @@ function checkKey(key, value) {
     }
     // add disabled to the selected letter of the quiz keyboard
     key.setAttribute('disabled', '');
+    const space = document.querySelector('.quiz__keyboard_key[name="Space"]:not([disabled=""]');
+    if (space) {
+      space.setAttribute('disabled', '');
+    }
   }
 }
 
