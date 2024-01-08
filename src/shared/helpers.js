@@ -1,12 +1,6 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-cycle */
-import {
-  TITLE,
-  GALLOWS_SECTION_CLASS,
-  GALLOWS_TITLE_CLASS,
-  QUIZ_SECTION_CLASS,
-  QUIZ_TITLE_CLASS,
-  QUIZ_KEYBOARD_KEY_CLASS,
-} from './constants';
+import { GALLOWS_SECTON, QUIZ_SECTON, QUIZ_KEYBOARD_KEY_CLASS } from './constants';
 import { quiz } from '../services/quiz-service';
 
 /**
@@ -14,12 +8,16 @@ import { quiz } from '../services/quiz-service';
  *
  * @param {String} selector html tag
  * @param {String} className class/es for new element
+ * @param {Element} parent parent of the new element
  * @return {Element} created element
  *
  */
-export function createElement(selector, className) {
+export function createElement(selector, className, parent) {
   const element = document.createElement(selector);
   element.className = className;
+  if (parent) {
+    parent.append(element);
+  }
   return element;
 }
 
@@ -54,21 +52,19 @@ export function createLetter(arr, parent, className, selector) {
 }
 
 /**
- * Create h1
- *
- * @param {String} className class of the h1
- * @return {Element} created h1
+ * Remove h1
  *
  */
-function createTitle(className) {
-  const element = document.querySelector('h1');
-  if (element) {
-    element.remove();
+function removeTitle(className) {
+  const title = document.querySelector('h1');
+  let value = false;
+  if (!title || (title && title.classList.contains(className))) {
+    if (title) {
+      title.remove();
+    }
+    value = true;
   }
-
-  const title = createElement('h1', className);
-  title.innerText = TITLE;
-  return title;
+  return value;
 }
 
 /**
@@ -80,24 +76,27 @@ function createTitle(className) {
  */
 export function changeTitle(curSize, lastSize) {
   if ((curSize >= 781 && !lastSize) || (curSize >= 781 && lastSize <= 780)) {
-    const title = createTitle(QUIZ_TITLE_CLASS);
-    document.querySelector(`.${QUIZ_SECTION_CLASS}`).prepend(title);
+    const notTitle = removeTitle(QUIZ_SECTON.title.class);
+    if (notTitle) {
+      QUIZ_SECTON.section.el.prepend(QUIZ_SECTON.title.el);
+    }
   }
   if ((curSize < 781 && !lastSize) || (curSize < 781 && lastSize >= 781)) {
-    const title = createTitle(GALLOWS_TITLE_CLASS);
-    document.querySelector(`.${GALLOWS_SECTION_CLASS}`).prepend(title);
+    const notTitle = removeTitle(GALLOWS_SECTON.title.class);
+    if (notTitle) {
+      GALLOWS_SECTON.section.el.prepend(GALLOWS_SECTON.title.el);
+    }
   }
 }
 
 /**
  * Remove all children of the DOM element
  *
- * @param {String} parentSelector selector of the DOM element
- * @return {Element} DOM element without child
- *
  */
-export function removeAllChildren(parentSelector) {
-  const parent = document.querySelector(`${parentSelector}`);
-  parent.innerHTML = '';
-  return parent;
+export function removeChildren(elements) {
+  let i = elements.length;
+  while (i > 0) {
+    i -= 1;
+    elements[i].remove();
+  }
 }

@@ -3,7 +3,7 @@ import { createGallowsSection } from './src/ui/layouts/gallows-section';
 import { createQuizSection } from './src/ui/layouts/quiz-section';
 import { changeTitle } from './src/shared/helpers';
 import { quiz, checkTimer } from './src/services/quiz-service';
-import { QUIZ_KEYBOARD_CLASS } from './src/shared/constants';
+import { QUIZ_SECTON } from './src/shared/constants';
 
 // Create html
 const app = document.createElement('div');
@@ -26,7 +26,7 @@ window.addEventListener('resize', (event) => {
 window.addEventListener('beforeunload', (event) => quiz.saveToLocalStorage(event));
 
 // Check selected letters
-const keyboard = document.querySelector(`.${QUIZ_KEYBOARD_CLASS}`);
+const keyboard = QUIZ_SECTON.keyboard.el;
 keyboard.addEventListener('click', (event) => checkTimer(event));
 document.addEventListener('keydown', (event) => checkTimer(event));
 document.addEventListener('keyup', (event) => checkTimer(event));

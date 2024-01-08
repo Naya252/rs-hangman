@@ -2,32 +2,74 @@ export const TITLE = 'HANGMAN GAME';
 
 export const { BASE_URL } = import.meta.env;
 
-export const GALLOWS_SECTION_CLASS = 'gallows';
-export const GALLOWS_TITLE_CLASS = `${GALLOWS_SECTION_CLASS}__title`;
-export const IMAGE_CONTAINER_CLASS = `${GALLOWS_SECTION_CLASS}__image-container`;
+// Gallows section
+const GALLOWS_SECTION_CLASS = 'gallows';
+const GALLOWS_TITLE_CLASS = `${GALLOWS_SECTION_CLASS}__title`;
+const IMAGE_CONTAINER_CLASS = `${GALLOWS_SECTION_CLASS}__image-container`;
 
 const parts = ['gallows', 'head', 'body', 'hand-one', 'hand-two', 'leg-one', 'leg-two', 'crow', 'crow3', 'crow4'];
-export const IMAGES_FIGURE_PARTS = parts.map((el, i) => ({
-  id: i + 1,
-  name: el,
-  class: `${IMAGE_CONTAINER_CLASS}_${el}`,
-  src: `${BASE_URL}/img/${el}.svg`,
+const defauiltParts = [0, 7, 8, 9];
+
+const images = parts.map((part, i) => ({
+  tag: 'img',
+  class: `${IMAGE_CONTAINER_CLASS}_${part}`,
+  alt: part,
+  src: `${BASE_URL}/img/${part}.svg`,
+  isDefault: defauiltParts.includes(i),
 }));
 
-export const QUIZ_SECTION_CLASS = 'quiz';
-export const QUIZ_TITLE_CLASS = `${QUIZ_SECTION_CLASS}__title`;
+export const GALLOWS_SECTON = {
+  section: { tag: 'section', class: GALLOWS_SECTION_CLASS },
+  title: { tag: 'h1', class: GALLOWS_TITLE_CLASS },
+  imgContainer: { tag: 'div', class: IMAGE_CONTAINER_CLASS },
+  images: [...images],
+};
 
-export const QUIZ_WORD_CLASS = `${QUIZ_SECTION_CLASS}__word`;
-export const QUIZ_LETTER_CLASS = `${QUIZ_WORD_CLASS}_letter`;
+// Quiz section
+const QUIZ_SECTION_CLASS = 'quiz';
+const QUIZ_TITLE_CLASS = `${QUIZ_SECTION_CLASS}__title`;
 
-export const QUIZ_HINT_CLASS = `${QUIZ_SECTION_CLASS}__hint`;
-export const QUIZ_HINT_TEXT_CLASS = `${QUIZ_HINT_CLASS}_text`;
-export const QUIZ_HINT_INFO_CLASS = `${QUIZ_HINT_CLASS}_counter`;
-export const QUIZ_HINT_COUNTER_CLASS = `${QUIZ_HINT_CLASS}_counter-value`;
+const QUIZ_WORD_CLASS = `${QUIZ_SECTION_CLASS}__word`;
+const QUIZ_LETTER_CLASS = `${QUIZ_WORD_CLASS}_letter`;
 
-export const QUIZ_KEYBOARD_CLASS = `${QUIZ_SECTION_CLASS}__keyboard`;
+const QUIZ_HINT_CLASS = `${QUIZ_SECTION_CLASS}__hint`;
+const QUIZ_HINT_TEXT_CLASS = `${QUIZ_HINT_CLASS}_text`;
+const QUIZ_HINT_INFO_CLASS = `${QUIZ_HINT_CLASS}_counter`;
+const QUIZ_HINT_COUNTER_CLASS = `${QUIZ_HINT_CLASS}_counter-value`;
+
+const QUIZ_KEYBOARD_CLASS = `${QUIZ_SECTION_CLASS}__keyboard`;
 export const QUIZ_KEYBOARD_KEY_CLASS = `${QUIZ_KEYBOARD_CLASS}_key`;
-export const QUIZ_KEYBOARD_OVERLAY_CLASS = `${QUIZ_KEYBOARD_CLASS}_overlay`;
+const QUIZ_KEYBOARD_OVERLAY_CLASS = `${QUIZ_KEYBOARD_CLASS}_overlay`;
+
+const KEY_INDEXES = [
+  { first: 0, last: 12 },
+  { first: 12, last: 23 },
+  { first: 23, last: 32 },
+  { first: 32, last: 34 },
+];
+const lines = [1, 2, 3, 4].map((el) => ({
+  tag: 'div',
+  class: `${QUIZ_KEYBOARD_CLASS}-line${el} line`,
+  index: KEY_INDEXES[el - 1],
+}));
+
+export const QUIZ_SECTON = {
+  section: { tag: 'section', class: QUIZ_SECTION_CLASS },
+  title: { tag: 'h1', class: QUIZ_TITLE_CLASS },
+
+  word: { tag: 'div', class: QUIZ_WORD_CLASS },
+  letter: { tag: 'div', class: QUIZ_LETTER_CLASS },
+
+  hint: { tag: 'div', class: QUIZ_HINT_CLASS },
+  text: { tag: 'p', class: QUIZ_HINT_TEXT_CLASS },
+  counter: { tag: 'p', class: QUIZ_HINT_INFO_CLASS },
+  counterValue: { tag: 'b', class: QUIZ_HINT_COUNTER_CLASS },
+
+  keyboard: { tag: 'div', class: QUIZ_KEYBOARD_CLASS },
+  lines: [...lines],
+  key: { tag: 'button', class: `${QUIZ_KEYBOARD_KEY_CLASS} btn` },
+  overlay: { tag: 'div', class: QUIZ_KEYBOARD_OVERLAY_CLASS },
+};
 
 export const QUIZ_DATA = [
   {
@@ -167,8 +209,6 @@ export const ALPHABET = [
  *        y on a QWERTZ (e.g., German) keyboard.
  */
 export const NON_NORMATIVE_LETTERS = ['KeyA', 'KeyQ', 'KeyW', 'KeyY', 'KeyZ'];
-
-export const KEY_INDEXES = [{ first: 0, last: 12 }, { first: 12, last: 23 }, { first: 23, last: 32 }, { first: 32 }];
 
 export const TEXT = [
   {

@@ -1,21 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import {
-  ALPHABET,
-  QUIZ_SECTION_CLASS,
-  QUIZ_WORD_CLASS,
-  QUIZ_LETTER_CLASS,
-  QUIZ_HINT_CLASS,
-  QUIZ_HINT_TEXT_CLASS,
-  QUIZ_HINT_INFO_CLASS,
-  QUIZ_HINT_COUNTER_CLASS,
-  QUIZ_KEYBOARD_CLASS,
-  QUIZ_KEYBOARD_KEY_CLASS,
-  QUIZ_KEYBOARD_OVERLAY_CLASS,
-  KEY_INDEXES,
-  TEXT,
-} from '../../shared/constants';
-import { createElement, createLetter, removeAllChildren } from '../../shared/helpers';
+import { QUIZ_SECTON, TITLE, ALPHABET, TEXT } from '../../shared/constants';
+import { createElement, createLetter, removeChildren } from '../../shared/helpers';
 import { quiz } from '../../services/quiz-service';
 
 /**
@@ -25,8 +11,8 @@ import { quiz } from '../../services/quiz-service';
  *
  */
 export function createWord(word) {
-  const parent = removeAllChildren(`.${QUIZ_WORD_CLASS}`);
-  createLetter(word, parent, QUIZ_LETTER_CLASS, 'div');
+  removeChildren(QUIZ_SECTON.word.el.childNodes);
+  createLetter(word, QUIZ_SECTON.word.el, QUIZ_SECTON.letter.class, QUIZ_SECTON.letter.tag);
 }
 
 /**
@@ -36,15 +22,18 @@ export function createWord(word) {
  *
  */
 export function creteHintContent(text) {
-  const parent = removeAllChildren(`.${QUIZ_HINT_CLASS}`);
-  const p = createElement('p', QUIZ_HINT_TEXT_CLASS);
+  removeChildren(QUIZ_SECTON.hint.el.childNodes);
+
+  const p = createElement(QUIZ_SECTON.text.tag, QUIZ_SECTON.text.class, QUIZ_SECTON.hint.el);
   p.innerText = text;
-  const infoCounter = createElement('p', QUIZ_HINT_INFO_CLASS);
+  QUIZ_SECTON.text.el = p;
+
+  const infoCounter = createElement(QUIZ_SECTON.counter.tag, QUIZ_SECTON.counter.class, QUIZ_SECTON.hint.el);
   infoCounter.innerText = TEXT[0].counterText[quiz.lang];
-  const counter = createElement('b', QUIZ_HINT_COUNTER_CLASS);
-  infoCounter.append(counter);
-  parent.append(p);
-  parent.append(infoCounter);
+  QUIZ_SECTON.counter.el = infoCounter;
+
+  const counter = createElement(QUIZ_SECTON.counterValue.tag, QUIZ_SECTON.counterValue.class, QUIZ_SECTON.counter.el);
+  QUIZ_SECTON.counterValue.el = counter;
 }
 
 /**
@@ -52,16 +41,15 @@ export function creteHintContent(text) {
  *
  */
 export function changeKeysLang() {
-  const lines = document.querySelectorAll('.line');
+  const lines = QUIZ_SECTON.keyboard.el.childNodes;
   let i = 0;
-  while (i < lines.length) {
-    removeAllChildren(`.quiz__keyboard-line${i + 1}`);
-
+  while (i < lines.length - 1) {
+    removeChildren(lines[i].childNodes);
     createLetter(
-      ALPHABET.slice(KEY_INDEXES[i].first, KEY_INDEXES[i].last),
+      ALPHABET.slice(QUIZ_SECTON.lines[i].index.first, QUIZ_SECTON.lines[i].index.last),
       lines[i],
-      `${QUIZ_KEYBOARD_KEY_CLASS} btn`,
-      'button',
+      QUIZ_SECTON.key.class,
+      QUIZ_SECTON.key.tag,
     );
     i += 1;
   }
@@ -73,21 +61,13 @@ export function changeKeysLang() {
  * @return {Element} keyboard
  *
  */
-function createKeyboard() {
-  const keyboard = createElement('div', QUIZ_KEYBOARD_CLASS);
-  const line1 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line1 line`);
-  const line2 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line2 line`);
-  const line3 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line3 line`);
-  const line4 = createElement('div', `${QUIZ_KEYBOARD_CLASS}-line4 line`);
+function createKeyboardContent() {
+  QUIZ_SECTON.lines.forEach((el) => {
+    createElement(el.tag, el.class, QUIZ_SECTON.keyboard.el);
+  });
 
-  const overlay = createElement('div', QUIZ_KEYBOARD_OVERLAY_CLASS);
-
-  keyboard.append(line1);
-  keyboard.append(line2);
-  keyboard.append(line3);
-  keyboard.append(line4);
-  keyboard.append(overlay);
-  return keyboard;
+  const overlay = createElement(QUIZ_SECTON.overlay.tag, QUIZ_SECTON.overlay.class, QUIZ_SECTON.keyboard.el);
+  QUIZ_SECTON.overlay.el = overlay;
 }
 
 /**
@@ -95,9 +75,12 @@ function createKeyboard() {
  *
  */
 export function cleanKeyboard() {
-  const keys = document.querySelectorAll(`.${QUIZ_KEYBOARD_KEY_CLASS}[disabled]`);
-  for (const key of keys) {
-    key.removeAttribute('disabled');
+  const lines = QUIZ_SECTON.keyboard.el.childNodes;
+  for (const line of lines) {
+    const keys = line.childNodes;
+    for (const key of keys) {
+      key.removeAttribute('disabled');
+    }
   }
 }
 
@@ -106,8 +89,7 @@ export function cleanKeyboard() {
  *
  */
 export function toggleKeyboardOverly() {
-  const overlay = document.querySelector(`.${QUIZ_KEYBOARD_OVERLAY_CLASS}`);
-  overlay.classList.toggle('show');
+  QUIZ_SECTON.overlay.el.classList.toggle('show');
 }
 
 /**
@@ -117,14 +99,20 @@ export function toggleKeyboardOverly() {
  *
  */
 export function createQuizSection() {
-  const section = createElement('section', QUIZ_SECTION_CLASS);
-  const word = createElement('div', QUIZ_WORD_CLASS);
-  const hint = createElement('div', QUIZ_HINT_CLASS);
-  const keyboard = createKeyboard();
+  const section = createElement(QUIZ_SECTON.section.tag, QUIZ_SECTON.section.class);
+  QUIZ_SECTON.section.el = section;
 
-  section.append(word);
-  section.append(hint);
-  section.append(keyboard);
+  const title = createElement(QUIZ_SECTON.title.tag, QUIZ_SECTON.title.class);
+  title.innerText = TITLE;
+  QUIZ_SECTON.title.el = title;
 
-  return section;
+  const word = createElement(QUIZ_SECTON.word.tag, QUIZ_SECTON.word.class, section);
+  QUIZ_SECTON.word.el = word;
+  const hint = createElement(QUIZ_SECTON.hint.tag, QUIZ_SECTON.hint.class, section);
+  QUIZ_SECTON.hint.el = hint;
+  const keyboard = createElement(QUIZ_SECTON.keyboard.tag, QUIZ_SECTON.keyboard.class, section);
+  QUIZ_SECTON.keyboard.el = keyboard;
+  createKeyboardContent();
+
+  return QUIZ_SECTON.section.el;
 }

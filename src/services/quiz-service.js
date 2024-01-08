@@ -1,11 +1,9 @@
-/* eslint-disable no-useless-return */
 /* eslint-disable import/no-cycle */
 import {
   QUIZ_DATA,
   ALPHABET,
-  IMAGE_CONTAINER_CLASS,
-  QUIZ_WORD_CLASS,
-  QUIZ_HINT_COUNTER_CLASS,
+  GALLOWS_SECTON,
+  QUIZ_SECTON,
   QUIZ_KEYBOARD_KEY_CLASS,
   NON_NORMATIVE_LETTERS,
 } from '../shared/constants';
@@ -60,7 +58,6 @@ class Quiz {
     if ((lang && lang === 'en') || (!lang && this.lang === 'ru')) {
       this.lang = 'en';
       changeKeysLang();
-      return;
     }
   }
 
@@ -193,7 +190,7 @@ class Quiz {
     if (this.counter < 7) {
       this.counter += 1;
       this.printCounter();
-      createFigurePart(this.counter, document.querySelector(`.${IMAGE_CONTAINER_CLASS}`));
+      createFigurePart(GALLOWS_SECTON.images[this.counter], GALLOWS_SECTON.imgContainer.el);
 
       if (this.counter === 6) {
         const isWinning = false;
@@ -207,8 +204,7 @@ class Quiz {
    *
    */
   printCounter() {
-    const parent = document.querySelector(`.${QUIZ_HINT_COUNTER_CLASS}`);
-    parent.innerText = `${this.counter} / ${this.max}`;
+    QUIZ_SECTON.counterValue.el.innerText = `${this.counter} / ${this.max}`;
   }
 
   /**
@@ -258,15 +254,20 @@ export const quiz = new Quiz();
  *
  */
 function showLetters(letters) {
-  const word = document.querySelector(`.${QUIZ_WORD_CLASS}`);
   letters.forEach((el) => {
-    word.childNodes[el.idx].innerText = el.value;
+    QUIZ_SECTON.word.el.childNodes[el.idx].innerText = el.value;
   });
   quiz.openedCounter += letters.length;
   if (quiz.openedCounter === quiz.word.length) {
     const isWinning = true;
     openModal(isWinning);
   }
+}
+
+function checkSpaceDisabled() {
+  const spaceKey = QUIZ_SECTON.keyboard.el.lastChild.previousSibling.lastChild;
+  const notDisabled = !spaceKey.hasAttribute('disabled');
+  return { notDisabled, spaceKey };
 }
 
 /**
@@ -296,9 +297,10 @@ function checkKey(key, value) {
     }
     // add disabled to the selected letter of the quiz keyboard
     key.setAttribute('disabled', '');
-    const space = document.querySelector('.quiz__keyboard_key[name="Space"]:not([disabled=""]');
-    if (space) {
-      space.setAttribute('disabled', '');
+
+    const { notDisabled, spaceKey } = checkSpaceDisabled();
+    if (notDisabled) {
+      spaceKey.setAttribute('disabled', '');
     }
   }
 }
@@ -308,8 +310,8 @@ function checkKey(key, value) {
  *
  */
 function clickOnSpace() {
-  const key = document.querySelector('.quiz__keyboard_key[name="Space"]:not([disabled=""]');
-  if (key) {
+  const { notDisabled } = checkSpaceDisabled();
+  if (notDisabled) {
     setTimeout(() => {
       quiz.changeLang();
       quiz.changeWord();

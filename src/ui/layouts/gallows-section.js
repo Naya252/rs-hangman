@@ -1,33 +1,33 @@
-import { IMAGES_FIGURE_PARTS, GALLOWS_SECTION_CLASS, IMAGE_CONTAINER_CLASS } from '../../shared/constants';
-import { createElement, removeAllChildren } from '../../shared/helpers';
+/* eslint-disable import/no-cycle */
+import { GALLOWS_SECTON, TITLE } from '../../shared/constants';
+import { createElement } from '../../shared/helpers';
 
 /**
  * Create image (a part of the image container)
  *
- * @param {Number} index index of the image
+ * @param {Object} item item of images
  * @param {Element} parent image container
  *
  */
-export function createFigurePart(index, parent) {
-  const el = IMAGES_FIGURE_PARTS[index];
-  const part = createElement('img', el.class);
-  part.src = el.src;
-  part.alt = el.name;
+export function createFigurePart(item, parent) {
+  const img = createElement(item.tag, item.class);
+  img.src = item.src;
+  img.alt = item.alt;
+  img.setAttribute('is-default', item.isDefault);
 
-  parent.append(part);
+  parent.append(img);
 }
 
 /**
  * Create default images
  *
- * @param {Element} parent image container
- *
  */
-function createDefaultParts(parent) {
-  createFigurePart(0, parent);
-  createFigurePart(7, parent);
-  createFigurePart(8, parent);
-  createFigurePart(9, parent);
+function createDefaultParts() {
+  GALLOWS_SECTON.images.forEach((el) => {
+    if (el.isDefault) {
+      createFigurePart(el, GALLOWS_SECTON.imgContainer.el);
+    }
+  });
 }
 
 /**
@@ -35,21 +35,14 @@ function createDefaultParts(parent) {
  *
  */
 export function cleanGallows() {
-  const parent = removeAllChildren(`.${IMAGE_CONTAINER_CLASS}`);
-  createDefaultParts(parent);
-}
-
-/**
- * Create image container
- *
- * @return {Element} image container
- *
- */
-function createFigure() {
-  const imgContainer = createElement('div', IMAGE_CONTAINER_CLASS);
-  createDefaultParts(imgContainer);
-
-  return imgContainer;
+  const elements = GALLOWS_SECTON.imgContainer.el.childNodes;
+  let i = elements.length;
+  while (i > 0) {
+    i -= 1;
+    if (elements[i].getAttribute('is-default') !== 'true') {
+      elements[i].remove();
+    }
+  }
 }
 
 /**
@@ -59,9 +52,16 @@ function createFigure() {
  *
  */
 export function createGallowsSection() {
-  const section = createElement('section', GALLOWS_SECTION_CLASS);
+  const section = createElement(GALLOWS_SECTON.section.tag, GALLOWS_SECTON.section.class);
+  GALLOWS_SECTON.section.el = section;
 
-  const imgContainer = createFigure();
-  section.append(imgContainer);
-  return section;
+  const title = createElement(GALLOWS_SECTON.title.tag, GALLOWS_SECTON.title.class);
+  title.innerText = TITLE;
+  GALLOWS_SECTON.title.el = title;
+
+  const imgContainer = createElement(GALLOWS_SECTON.imgContainer.tag, GALLOWS_SECTON.imgContainer.class, section);
+  GALLOWS_SECTON.imgContainer.el = imgContainer;
+  createDefaultParts();
+
+  return GALLOWS_SECTON.section.el;
 }
