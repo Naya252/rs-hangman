@@ -75,10 +75,10 @@ class Quiz extends Keyboard {
   }
 
   eventKey(event) {
-    if (this.counter <= this.max) {
+    if (this.counter < this.max) {
       const { isChangedLanguage, key } = this.checkTimer(event);
 
-      if (isChangedLanguage) {
+      if (isChangedLanguage && this.counter === 0) {
         setTimeout(() => {
           this.changeLang();
           this.changeWord();
@@ -102,29 +102,31 @@ class Quiz extends Keyboard {
    *
    */
   checkQuizLetter(key, value) {
-    if (value !== 'English' && value !== 'Русский') {
-      if (this.word.includes(value.toLowerCase())) {
-        const letters = [];
-        this.word.forEach((el, i) => {
-          if (el === value.toLowerCase()) {
-            letters.push({
-              value,
-              idx: i,
-            });
-          }
-        });
-        // open correct letters of the quiz word
-        this.showLetters(letters);
-      } else {
-        // change the mistakes counter
-        this.changeCounter();
-      }
-      // add disabled to the selected letter of the quiz keyboard
-      key.setAttribute('disabled', '');
+    if (!key.hasAttribute('disabled')) {
+      if (value !== 'English' && value !== 'Русский') {
+        if (this.word.includes(value.toLowerCase())) {
+          const letters = [];
+          this.word.forEach((el, i) => {
+            if (el === value.toLowerCase()) {
+              letters.push({
+                value,
+                idx: i,
+              });
+            }
+          });
+          // open correct letters of the quiz word
+          this.showLetters(letters);
+        } else {
+          // change the mistakes counter
+          this.changeCounter();
+        }
+        // // add disabled to the selected letter of the quiz keyboard
+        key.setAttribute('disabled', '');
 
-      const { notDisabled, spaceKey } = this.checkSpaceDisabled();
-      if (notDisabled) {
-        spaceKey.setAttribute('disabled', '');
+        const { notDisabled, spaceKey } = this.checkSpaceDisabled();
+        if (notDisabled) {
+          spaceKey.setAttribute('disabled', '');
+        }
       }
     }
   }

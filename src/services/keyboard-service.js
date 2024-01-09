@@ -112,7 +112,7 @@ export default class Keyboard {
         this.createKeys();
       }, 50);
     }
-    return !notDisabled;
+    return notDisabled;
   }
 
   checkSpaceDisabled() {
@@ -134,13 +134,16 @@ export default class Keyboard {
     if (event.type === 'click') {
       key = event.target.closest(`.${this.keyboardKey.class}`);
       if (key) {
-        this.addKeyFocus(key);
+        if (!key.hasAttribute('disabled')) {
+          key.focus();
+        }
 
         if (key.getAttribute('name') === 'Space') {
           isChangedLanguage = this.clickOnSpace();
         }
       }
     }
+
     if (event.type === 'keydown') {
       let letter;
       if (NON_NORMATIVE_LETTERS.includes(event.code)) {
@@ -151,7 +154,9 @@ export default class Keyboard {
 
       if (letter) {
         key = document.querySelector(`.${this.keyboardKey.class}[value=${letter[0][this.lang]}]`);
-        this.addKeyFocus(key);
+        if (!key.hasAttribute('disabled')) {
+          key.focus();
+        }
       }
     }
 
@@ -175,32 +180,6 @@ export default class Keyboard {
     }
 
     return letter;
-  }
-
-  /**
-   * Add focus on the key of the quiz keyboard
-   *
-   * @param {Element} key the key of the quiz keyboard
-   *
-   */
-  addKeyFocus(key) {
-    if (key) {
-      if (!key.hasAttribute('disabled')) {
-        const value = key.getAttribute('value');
-        key.focus();
-        // add disabled to the selected letter of the quiz keyboard
-        setTimeout(() => {
-          if (value !== 'English' && value !== 'Русский') {
-            key.setAttribute('disabled', '');
-          } else {
-            const { notDisabled, spaceKey } = this.checkSpaceDisabled();
-            if (notDisabled) {
-              spaceKey.setAttribute('disabled', '');
-            }
-          }
-        }, 50);
-      }
-    }
   }
 
   /**
