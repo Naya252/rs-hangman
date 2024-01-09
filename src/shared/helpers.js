@@ -58,7 +58,7 @@ export function createLetter(arr, parent, className, selector) {
 function removeTitle(className) {
   const title = document.querySelector('h1');
   let value = false;
-  if (!title || (title && title.classList.contains(className))) {
+  if (!title || (title && !title.classList.contains(className))) {
     if (title) {
       title.remove();
     }
