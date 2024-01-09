@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { QUIZ_SECTON, TITLE } from '../../shared/constants';
+import { QUIZ_SECTON, TITLE, TEXT } from '../../shared/constants';
 import { createElement, createLetter, removeChildren } from '../../shared/helpers';
+import quiz from '../../services/quiz-service';
 
 /**
  * Create quiz word
@@ -27,6 +28,7 @@ export function creteHintContent(text) {
   QUIZ_SECTON.text.el = p;
 
   const infoCounter = createElement(QUIZ_SECTON.counter.tag, QUIZ_SECTON.counter.class, QUIZ_SECTON.hint.el);
+  infoCounter.innerText = TEXT[0].counterText[quiz.lang];
   QUIZ_SECTON.counter.el = infoCounter;
 
   const counter = createElement(QUIZ_SECTON.counterValue.tag, QUIZ_SECTON.counterValue.class, QUIZ_SECTON.counter.el);
