@@ -13,7 +13,7 @@ export function createFigurePart(item, parent) {
   const img = createElement(item.tag, item.class);
   img.src = item.src;
   img.alt = item.alt;
-  img.setAttribute('is-default', item.isDefault);
+  img.setAttribute('data-is-default', item.isDefault);
 
   parent.append(img);
 }
@@ -39,7 +39,7 @@ export function cleanGallows() {
   let i = elements.length;
   while (i > 0) {
     i -= 1;
-    if (elements[i].getAttribute('is-default') !== 'true') {
+    if (elements[i].getAttribute('data-is-default') !== 'true') {
       elements[i].remove();
     }
   }
