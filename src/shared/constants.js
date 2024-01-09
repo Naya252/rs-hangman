@@ -37,7 +37,7 @@ const QUIZ_HINT_TEXT_CLASS = `${QUIZ_HINT_CLASS}_text`;
 const QUIZ_HINT_INFO_CLASS = `${QUIZ_HINT_CLASS}_counter`;
 const QUIZ_HINT_COUNTER_CLASS = `${QUIZ_HINT_CLASS}_counter-value`;
 
-const QUIZ_KEYBOARD_CLASS = `${QUIZ_SECTION_CLASS}__keyboard`;
+export const QUIZ_KEYBOARD_CLASS = `${QUIZ_SECTION_CLASS}__keyboard`;
 export const QUIZ_KEYBOARD_KEY_CLASS = `${QUIZ_KEYBOARD_CLASS}_key`;
 const QUIZ_KEYBOARD_OVERLAY_CLASS = `${QUIZ_KEYBOARD_CLASS}_overlay`;
 
@@ -64,8 +64,11 @@ export const QUIZ_SECTON = {
   text: { tag: 'p', class: QUIZ_HINT_TEXT_CLASS },
   counter: { tag: 'p', class: QUIZ_HINT_INFO_CLASS },
   counterValue: { tag: 'b', class: QUIZ_HINT_COUNTER_CLASS },
+};
 
-  keyboard: { tag: 'div', class: QUIZ_KEYBOARD_CLASS },
+export const KEYBOARD = {
+  tag: 'div',
+  class: QUIZ_KEYBOARD_CLASS,
   lines: [...lines],
   key: { tag: 'button', class: `${QUIZ_KEYBOARD_KEY_CLASS} btn` },
   overlay: { tag: 'div', class: QUIZ_KEYBOARD_OVERLAY_CLASS },

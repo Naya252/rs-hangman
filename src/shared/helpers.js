@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-cycle */
 import { GALLOWS_SECTON, QUIZ_SECTON, QUIZ_KEYBOARD_KEY_CLASS } from './constants';
-import { quiz } from '../services/quiz-service';
+import quiz from '../services/quiz-service';
 
 /**
  * Create element for DOM

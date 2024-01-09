@@ -2,7 +2,7 @@ import './src/sass/style.module.scss';
 import { createGallowsSection } from './src/ui/layouts/gallows-section';
 import { createQuizSection } from './src/ui/layouts/quiz-section';
 import { changeTitle } from './src/shared/helpers';
-import { quiz, checkTimer } from './src/services/quiz-service';
+import quiz from './src/services/quiz-service';
 import { QUIZ_SECTON } from './src/shared/constants';
 
 // Create html
@@ -25,13 +25,4 @@ window.addEventListener('resize', (event) => {
 // Save passed quizes to LocalStorage
 window.addEventListener('beforeunload', (event) => quiz.saveToLocalStorage(event));
 
-// Check selected letters
-const keyboard = QUIZ_SECTON.keyboard.el;
-keyboard.addEventListener('click', (event) => checkTimer(event));
-document.addEventListener('keydown', (event) => checkTimer(event));
-document.addEventListener('keyup', (event) => checkTimer(event));
-
-// Start game
-setTimeout(() => {
-  quiz.checkLocalStorage();
-}, 100);
+quiz.init(QUIZ_SECTON.section.el);

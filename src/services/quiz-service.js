@@ -1,80 +1,21 @@
 /* eslint-disable import/no-cycle */
-import {
-  QUIZ_DATA,
-  ALPHABET,
-  GALLOWS_SECTON,
-  QUIZ_SECTON,
-  QUIZ_KEYBOARD_KEY_CLASS,
-  NON_NORMATIVE_LETTERS,
-} from '../shared/constants';
-import {
-  creteHintContent,
-  createWord,
-  cleanKeyboard,
-  toggleKeyboardOverly,
-  changeKeysLang,
-} from '../ui/layouts/quiz-section';
+import { QUIZ_DATA, GALLOWS_SECTON, QUIZ_SECTON } from '../shared/constants';
+import Keyboard from './keyboard-service';
+import { creteHintContent, createWord } from '../ui/layouts/quiz-section';
 import { createFigurePart, cleanGallows } from '../ui/layouts/gallows-section';
 import { createModal } from '../ui/layouts/modal';
 
-/**
- * Open modal
- *
- * @param {Boolean} isWinning game result
- *
- */
-function openModal(isWinning) {
-  // add overlay
-  toggleKeyboardOverly();
-  // open modal with pause
-  setTimeout(() => {
-    createModal(isWinning);
-  }, 500);
-}
-class Quiz {
-  constructor(id, word, hint, counter = 0, openedCounter = 0) {
+class Quiz extends Keyboard {
+  constructor(id, word, hint) {
+    super();
     this.id = id;
     this.word = word;
     this.hint = hint;
-    this.counter = counter;
-    this.openedCounter = openedCounter;
+    this.counter = 0;
+    this.openedCounter = 0;
     this.max = 6;
-    this.timeStartClickBtn = null;
     this.passedQuizes = [];
     this.data = [...QUIZ_DATA];
-    this.lang = null;
-  }
-
-  /**
-   * Change quiz lang
-   *
-   */
-  changeLang(lang = false) {
-    if ((lang && lang === 'ru') || (!lang && this.lang === 'en')) {
-      this.lang = 'ru';
-      changeKeysLang();
-      return;
-    }
-    if ((lang && lang === 'en') || (!lang && this.lang === 'ru')) {
-      this.lang = 'en';
-      changeKeysLang();
-    }
-  }
-
-  /**
-   * Save data to localStorage
-   *
-   */
-  saveToLocalStorage() {
-    if (this.passedQuizes.length) {
-      localStorage.setItem('passed', JSON.stringify(this.passedQuizes));
-    }
-    if (this.id) {
-      localStorage.setItem('quizId', this.id);
-    }
-    if (this.lang) {
-      localStorage.setItem('lang', this.lang);
-    }
   }
 
   /**
@@ -106,6 +47,102 @@ class Quiz {
     }
     // Choose quiz id for start game
     this.changeId();
+  }
+
+  /**
+   * Save data to localStorage
+   *
+   */
+  saveToLocalStorage() {
+    if (this.passedQuizes.length) {
+      localStorage.setItem('passed', JSON.stringify(this.passedQuizes));
+    }
+    if (this.id) {
+      localStorage.setItem('quizId', this.id);
+    }
+    if (this.lang) {
+      localStorage.setItem('lang', this.lang);
+    }
+  }
+
+  init(parent) {
+    this.initKeyboard(parent);
+    this.checkLocalStorage();
+
+    this.keyboard.addEventListener('click', (event) => this.eventKey(event));
+    document.addEventListener('keydown', (event) => this.eventKey(event));
+    document.addEventListener('keyup', (event) => this.eventKey(event));
+  }
+
+  eventKey(event) {
+    if (this.counter <= this.max) {
+      const { isChangedLanguage, key } = this.checkTimer(event);
+
+      if (isChangedLanguage) {
+        setTimeout(() => {
+          this.changeLang();
+          this.changeWord();
+          this.changeHint();
+          this.printCounter();
+        }, 50);
+      }
+      if (key) {
+        setTimeout(() => {
+          this.checkQuizLetter(key, key.getAttribute('value'));
+        }, 50);
+      }
+    }
+  }
+
+  /**
+   * Check key of the quiz keyboard
+   *
+   * @param {Element} key the key of the quiz keyboard
+   * @param {String} value letter (value of key)
+   *
+   */
+  checkQuizLetter(key, value) {
+    if (value !== 'English' && value !== 'Русский') {
+      if (this.word.includes(value.toLowerCase())) {
+        const letters = [];
+        this.word.forEach((el, i) => {
+          if (el === value.toLowerCase()) {
+            letters.push({
+              value,
+              idx: i,
+            });
+          }
+        });
+        // open correct letters of the quiz word
+        this.showLetters(letters);
+      } else {
+        // change the mistakes counter
+        this.changeCounter();
+      }
+      // add disabled to the selected letter of the quiz keyboard
+      key.setAttribute('disabled', '');
+
+      const { notDisabled, spaceKey } = this.checkSpaceDisabled();
+      if (notDisabled) {
+        spaceKey.setAttribute('disabled', '');
+      }
+    }
+  }
+
+  /**
+   * Change quiz lang
+   *
+   */
+  changeLang(lang = false) {
+    if ((lang && lang === 'ru') || (!lang && this.lang === 'en')) {
+      this.lang = 'ru';
+      this.createKeys();
+      return;
+    }
+    if ((lang && lang === 'en') || (!lang && this.lang === 'ru')) {
+      this.lang = 'en';
+      this.createKeys();
+    }
   }
 
   /**
@@ -194,9 +231,41 @@ class Quiz {
 
       if (this.counter === 6) {
         const isWinning = false;
-        openModal(isWinning);
+        this.overGame(isWinning);
       }
     }
+  }
+
+  /**
+   * Show correct letters of the quiz word
+   *
+   * @param {Array} letters chosen letter of the keyboard
+   *
+   */
+  showLetters(letters) {
+    letters.forEach((el) => {
+      QUIZ_SECTON.word.el.childNodes[el.idx].innerText = el.value;
+    });
+    this.openedCounter += letters.length;
+    if (this.openedCounter === this.word.length) {
+      const isWinning = true;
+      this.overGame(isWinning);
+    }
+  }
+
+  /**
+   * Open modal
+   *
+   * @param {Boolean} isWinning game result
+   *
+   */
+  overGame(isWinning) {
+    // add overlay
+    this.toggleKeyboardOverly();
+    // open modal with pause
+    setTimeout(() => {
+      createModal(isWinning);
+    }, 500);
   }
 
   /**
@@ -237,183 +306,11 @@ class Quiz {
     // remove body parts
     cleanGallows();
     // remove disabled
-    cleanKeyboard();
-    // remove overlay
-    toggleKeyboardOverly();
+    this.cleanKeyboard();
     // choose new quiz id
     this.changeId();
   }
 }
 
-export const quiz = new Quiz();
-
-/**
- * Show correct letters of the quiz word
- *
- * @param {Array} letters chosen letter of the keyboard
- *
- */
-function showLetters(letters) {
-  letters.forEach((el) => {
-    QUIZ_SECTON.word.el.childNodes[el.idx].innerText = el.value;
-  });
-  quiz.openedCounter += letters.length;
-  if (quiz.openedCounter === quiz.word.length) {
-    const isWinning = true;
-    openModal(isWinning);
-  }
-}
-
-function checkSpaceDisabled() {
-  const spaceKey = QUIZ_SECTON.keyboard.el.lastChild.previousSibling.lastChild;
-  const notDisabled = !spaceKey.hasAttribute('disabled');
-  return { notDisabled, spaceKey };
-}
-
-/**
- * Add focus on the key of the quiz keyboard
- *
- * @param {Element} key the key of the quiz keyboard
- * @param {String} value letter (value of key)
- *
- */
-function checkKey(key, value) {
-  if (value !== 'English' && value !== 'Русский') {
-    if (quiz.word.includes(value.toLowerCase())) {
-      const letters = [];
-      quiz.word.forEach((el, i) => {
-        if (el === value.toLowerCase()) {
-          letters.push({
-            value,
-            idx: i,
-          });
-        }
-      });
-      // open correct letters of the quiz word
-      showLetters(letters);
-    } else {
-      // change the mistakes counter
-      quiz.changeCounter();
-    }
-    // add disabled to the selected letter of the quiz keyboard
-    key.setAttribute('disabled', '');
-
-    const { notDisabled, spaceKey } = checkSpaceDisabled();
-    if (notDisabled) {
-      spaceKey.setAttribute('disabled', '');
-    }
-  }
-}
-
-/**
- * Key up on space of the real keyboard
- *
- */
-function clickOnSpace() {
-  const { notDisabled } = checkSpaceDisabled();
-  if (notDisabled) {
-    setTimeout(() => {
-      quiz.changeLang();
-      quiz.changeWord();
-      quiz.changeHint();
-      quiz.printCounter();
-    }, 50);
-  }
-}
-
-/**
- * Add focus on the key of the quiz keyboard
- *
- * @param {Element} key the key of the quiz keyboard
- *
- */
-function changeKey(key) {
-  if (key) {
-    if (!key.hasAttribute('disabled')) {
-      const value = key.getAttribute('value');
-      key.focus();
-
-      if (value !== 'English' && value !== 'Русский') {
-        setTimeout(() => {
-          checkKey(key, value);
-        }, 50);
-      }
-    }
-  }
-}
-
-/**
- * Check non normative letter
- *
- * @param {Event} event keydown
- *
- */
-function checkSpecialKey(event) {
-  let letter;
-  const key = event.key.toUpperCase();
-
-  if (ALPHABET.some((el) => el.ru === key || el.en === key)) {
-    letter = ALPHABET.filter((el) => el.ru === event.key.toUpperCase() || el.en === event.key.toUpperCase());
-  } else {
-    letter = ALPHABET.filter((el) => el.code === event.code);
-  }
-
-  return letter;
-}
-
-/**
- * Select the letter (key of keyboard)
- *
- * @param {Event} event click or keydown
- *
- */
-function chooseKey(event) {
-  if (quiz.counter < 6) {
-    let key = null;
-    if (event.type === 'click') {
-      key = event.target.closest(`.${QUIZ_KEYBOARD_KEY_CLASS}`);
-      if (key) {
-        changeKey(key);
-
-        if (key.getAttribute('name') === 'Space') {
-          clickOnSpace();
-        }
-      }
-    }
-    if (event.type === 'keydown') {
-      let letter;
-      if (NON_NORMATIVE_LETTERS.includes(event.code)) {
-        letter = checkSpecialKey(event);
-      } else {
-        letter = ALPHABET.filter((el) => el.code === event.code);
-      }
-
-      if (letter) {
-        key = document.querySelector(`.${QUIZ_KEYBOARD_KEY_CLASS}[value=${letter[0][quiz.lang]}]`);
-        changeKey(key);
-      }
-    }
-  }
-}
-
-/**
- * Check timer between clicks on letters
- *
- */
-export function checkTimer(event) {
-  if (event.type === 'click' || (event.type === 'keydown' && ALPHABET.some((el) => el.code === event.code))) {
-    if (!quiz.timeStartClickBtn) {
-      quiz.timeStartClickBtn = window.performance.now();
-      chooseKey(event);
-    } else {
-      const timeSecondClick = window.performance.now();
-      if (timeSecondClick - quiz.timeStartClickBtn > 50) {
-        quiz.timeStartClickBtn = timeSecondClick;
-        chooseKey(event);
-      }
-    }
-  }
-  if (event.type === 'keyup' && event.code === 'Space') {
-    clickOnSpace();
-  }
-}
+const quiz = new Quiz();
+export default quiz;

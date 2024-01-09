@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { createElement } from '../../shared/helpers';
-import { quiz } from '../../services/quiz-service';
+import quiz from '../../services/quiz-service';
 import { BASE_URL, TEXT } from '../../shared/constants';
 
 /**
