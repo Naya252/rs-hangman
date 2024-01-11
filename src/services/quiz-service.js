@@ -247,6 +247,7 @@ class Quiz extends Keyboard {
   showLetters(letters) {
     letters.forEach((el) => {
       QUIZ_SECTON.word.el.childNodes[el.idx].innerText = el.value;
+      QUIZ_SECTON.word.el.childNodes[el.idx].classList.add('show');
     });
     this.openedCounter += letters.length;
     if (this.openedCounter === this.word.length) {
