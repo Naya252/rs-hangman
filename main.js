@@ -24,5 +24,7 @@ window.addEventListener('resize', (event) => {
 
 // Save passed quizes to LocalStorage
 window.addEventListener('beforeunload', (event) => quiz.saveToLocalStorage(event));
+// Refuce context menu
+window.addEventListener('contextmenu', (event) => event.preventDefault());
 
 quiz.init(QUIZ_SECTON.section.el);

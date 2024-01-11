@@ -350,6 +350,7 @@
   width: 2.8rem;
   position: relative;
   color: $light-color-secondary;
+  user-select: none;
 }
 .quiz__keyboard_key[name='Space'] {
   width: 22rem;
