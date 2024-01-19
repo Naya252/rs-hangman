@@ -16,6 +16,7 @@ class Quiz extends Keyboard {
     this.max = 6;
     this.passedQuizes = [];
     this.data = [...QUIZ_DATA];
+    this.isWinning = null;
   }
 
   /**
@@ -75,7 +76,10 @@ class Quiz extends Keyboard {
   }
 
   eventKey(event) {
-    if (this.counter < this.max) {
+    if (
+      (this.counter < this.max && this.isWinning === null) ||
+      (this.openedCounter !== this.word.length && this.isWinning)
+    ) {
       const { isChangedLanguage, key } = this.checkTimer(event);
 
       if (isChangedLanguage && this.counter === 0) {
@@ -232,8 +236,8 @@ class Quiz extends Keyboard {
       createFigurePart(GALLOWS_SECTON.images[this.counter], GALLOWS_SECTON.imgContainer.el);
 
       if (this.counter === 6) {
-        const isWinning = false;
-        this.overGame(isWinning);
+        this.isWinning = false;
+        this.overGame(this.isWinning);
       }
     }
   }
@@ -251,8 +255,8 @@ class Quiz extends Keyboard {
     });
     this.openedCounter += letters.length;
     if (this.openedCounter === this.word.length) {
-      const isWinning = true;
-      this.overGame(isWinning);
+      this.isWinning = true;
+      this.overGame(this.isWinning);
     }
   }
 
