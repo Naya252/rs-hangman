@@ -301,6 +301,7 @@ class Quiz extends Keyboard {
     this.id = 0;
     this.word = null;
     this.hint = null;
+    this.isWinning = null;
   }
 
   /**
