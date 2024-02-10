@@ -1,0 +1,73 @@
+@import './variables.module.scss';
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  padding: 40px;
+  background: rgba($dark-color-secondary, 0.9);
+  display: none;
+  opacity: 0;
+
+  .modal__wrap {
+    width: 100%;
+    min-height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal__content {
+      max-width: 400px;
+      width: 100%;
+      background: $dark-color;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: all 0.3s ease;
+      transform: scale(0.7);
+      opacity: 0;
+      padding: 40px;
+      box-shadow: 0 0 12px 1px $accent-color;
+    }
+
+    .modal__content_title,
+    .modal__content_p {
+      margin: 0;
+    }
+
+    .modal__content_btn {
+      margin-top: 16px;
+      color: rgba($accent-color, 0.8);
+
+      &:hover,
+      &:focus {
+        color: $accent-color;
+      }
+    }
+  }
+
+  &.modal--active {
+    display: flex;
+    opacity: 1;
+
+    .modal__content.content--active {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.scroll-not-visible {
+  overflow: hidden;
+  height: 100dvh;
+}

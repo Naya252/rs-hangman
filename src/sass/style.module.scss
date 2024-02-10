@@ -1,0 +1,423 @@
+@import './variables.module.scss';
+@import './modal.module.scss';
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: $light-color;
+  background-color: $dark-color;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+.body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 200px;
+  min-height: 100dvh;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: $content-width-xl;
+  margin: 0 auto;
+  padding: 20px $content-gap-xl;
+}
+
+@media (orientation: portrait) {
+  .container {
+    flex-direction: column;
+    max-height: 1000px;
+    padding: 8px;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-height: 1200px) {
+  .container {
+    height: 90dvh;
+  }
+}
+
+@media only screen and (max-width: $breakpoint-md) {
+  .body {
+    place-items: start center;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: $breakpoint-sm) {
+  .container {
+    padding: $content-gap-sm;
+    max-width: $content-width-sm;
+  }
+}
+
+/***********************************************************************************
+ * Gallows section
+ ***********************************************************************************/
+
+.gallows {
+  width: clamp(200px, 30%, 353px);
+}
+
+.gallows__image-container {
+  width: 100%;
+  position: relative;
+}
+
+@media (orientation: portrait) {
+  .gallows {
+    width: clamp(200px, 100%, 520px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  .gallows__image-container {
+    width: clamp(30%, 0px, 50%);
+    margin: 1rem auto 2rem auto;
+  }
+}
+
+@media only screen and (max-width: $breakpoint-md) {
+  .gallows {
+    width: clamp(200px, 100%, 520px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  .gallows__title {
+    color: $light-color-secondary;
+    font-size: clamp(14px, 5vw, 0.8rem);
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .gallows__image-container {
+    margin: 1rem auto;
+  }
+}
+
+@media screen and (max-width: $breakpoint-md) and (max-height: 800px) {
+  .gallows__image-container {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: $breakpoint-md) and (min-height: 801px) {
+  .gallows__image-container {
+    width: 40%;
+  }
+}
+
+.gallows__image-container_gallows {
+  width: 100%;
+}
+
+.gallows__image-container_head {
+  position: absolute;
+  top: 20%;
+  left: 73%;
+  width: 25%;
+}
+
+.gallows__image-container_body {
+  position: absolute;
+  top: 35%;
+  left: 85%;
+  height: 25%;
+}
+
+.gallows__image-container_hand-one {
+  position: absolute;
+  top: 40%;
+  left: 65.5%;
+  height: 15%;
+}
+
+.gallows__image-container_hand-two {
+  position: absolute;
+  top: 40%;
+  left: 85%;
+  height: 15%;
+}
+
+.gallows__image-container_leg-one {
+  position: absolute;
+  top: 59%;
+  left: 65.5%;
+  height: 15%;
+}
+
+.gallows__image-container_leg-two {
+  position: absolute;
+  top: 59%;
+  left: 84.5%;
+  height: 15%;
+}
+
+.gallows__image-container_crow,
+.gallows__image-container_crow3,
+.gallows__image-container_crow4 {
+  position: absolute;
+  width: 20%;
+  height: 15%;
+  top: -6.5%;
+  left: 30%;
+}
+
+.gallows__image-container_crow3 {
+  left: 80%;
+  top: 90%;
+}
+.gallows__image-container_crow4 {
+  left: 70%;
+  width: 17%;
+}
+
+/***********************************************************************************
+ * Quiz section
+ ***********************************************************************************/
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  width: clamp(280px, 90%, 100% - 80px);
+  margin: 0 auto;
+}
+
+@media screen and (orientation: portrait) {
+  .quiz {
+    height: 50dvh;
+  }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+  .quiz {
+    width: clamp(280px, 95%, 100% - 16px);
+  }
+}
+
+@media only screen and (max-width: $breakpoint-xs) {
+  .quiz {
+    gap: 0;
+  }
+}
+
+.quiz__title {
+  padding-top: 2.5rem;
+  font-size: clamp(16px, 1.2rem, 1.5rem);
+  line-height: 1.1;
+  margin: 0;
+  color: $light-color-secondary;
+  text-align: center;
+}
+
+@media screen and (orientation: portrait) and (max-height: 1200px) {
+  .quiz__title {
+    padding-top: 0;
+  }
+}
+
+.quiz__word {
+  min-height: 52px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.quiz__word_letter {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  color: $accent-color;
+
+  &::after {
+    content: '';
+    height: 2px;
+    width: 80%;
+    background: $accent-color;
+    position: absolute;
+    left: 10%;
+    bottom: 0;
+  }
+
+  &.show {
+    &::after {
+      background: transparent;
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint-lg) {
+  .quiz__word_letter {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.3rem;
+  }
+}
+
+.quiz__hint {
+  text-align: center;
+  min-height: 100px;
+  font-size: 1.2rem;
+}
+
+.quiz__hint_text {
+  font-weight: 600;
+}
+
+.quiz__hint_counter {
+  color: $light-color-secondary;
+}
+
+.quiz__hint_counter-value {
+  color: $accent-color;
+}
+
+@media screen and (max-width: $breakpoint-md) {
+  .quiz__hint_text,
+  .quiz__hint_counter {
+    font-size: 1rem;
+  }
+}
+
+.quiz__keyboard {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: clamp(280px, 620px, 100%);
+  margin: 0 auto;
+  position: relative;
+
+  .line {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .quiz__keyboard_overlay {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+  }
+}
+
+.btn {
+  border-radius: 8px;
+  height: 2.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $dark-color-secondary;
+  color: $light-color;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.quiz__keyboard_key {
+  width: 2.8rem;
+  position: relative;
+  color: $light-color-secondary;
+  user-select: none;
+}
+.quiz__keyboard_key[name='Space'] {
+  width: 22rem;
+}
+.quiz__keyboard_key:not([disabled]):hover {
+  border-color: $accent-color;
+  color: $light-color;
+}
+.quiz__keyboard_key:focus,
+.quiz__keyboard_key:focus-visible {
+  border-color: $accent-color;
+  color: $light-color;
+  outline: 1px auto -webkit-focus-ring-color;
+  box-shadow: 0 0 4px 4px $accent-color;
+}
+
+.quiz__keyboard_key:disabled {
+  border-color: $accent-color;
+  box-shadow: inset 0 0 4px 4px rgba(100, 108, 255, 0.1);
+  color: rgba($light-color, 0.5);
+  cursor: auto;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($light-color, 0.1);
+  }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+  .quiz__keyboard_key {
+    width: calc(100% / 12);
+    height: 2.4rem;
+  }
+
+  .quiz__keyboard_key[name='Space'] {
+    width: 14rem;
+  }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+  .quiz__keyboard {
+    .line {
+      gap: 4px;
+    }
+  }
+  .quiz__keyboard_key {
+    font-size: 0.8rem;
+    height: 2rem;
+  }
+
+  .quiz__keyboard_key[name='Space'] {
+    width: 14rem;
+  }
+}
+
+@media screen and (max-width: $breakpoint-xs) {
+  .quiz__keyboard_key {
+    font-size: 0.65rem;
+    height: 1.8rem;
+  }
+
+  .quiz__keyboard_key[name='Space'] {
+    width: 12rem;
+  }
+}

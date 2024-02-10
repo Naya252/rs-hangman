@@ -1,0 +1,19 @@
+//Main colors
+$dark-color: #242424;
+$dark-color-secondary: #1a1a1a;
+$light-color: #c4bebe;
+$light-color-secondary: #a0a0a0;
+$accent-color: #646cff;
+
+$breakpoint-xl: 1440px;
+$breakpoint-lg: 1044px;
+$breakpoint-md: 780px;
+$breakpoint-sm: 600px;
+$breakpoint-xs: 375px;
+
+//Content width
+$content-max-width: $breakpoint-xl;
+$content-gap-xl: 40px;
+$content-gap-sm: 8px;
+$content-width-xl: $content-max-width - $content-gap-xl * 2;
+$content-width-sm: $content-max-width - $content-gap-sm * 2;
